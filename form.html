@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <link rel="stylesheet" href="form.css">
+ 
+  <script>
+   let currentStep = 1;
+let currentDocStep = 1;
+
+function showStep(step) {
+  document.querySelectorAll('.steps li').forEach((li, index) => {
+    li.classList.toggle('active', index + 1 === step);
+  });
+
+  document.querySelectorAll('.form-step').forEach(form => {
+    form.style.display = 'none';
+  });
+  document.getElementById(`step${step}`).style.display = 'block';
+  if (step === 4) {
+    showDocStep(currentDocStep);
+  }
+  currentStep = step;
+}
+
+function showDocStep(docStep) {
+  document.querySelectorAll('.doc-step').forEach(form => {
+    form.style.display = 'none';
+  });
+  document.getElementById(`docStep${docStep}`).style.display = 'block';
+  currentDocStep = docStep;
+  updateButtons();
+}
+
+function validateStep(stepId) {
+  const inputs = document.querySelectorAll(`#${stepId} input[required], #${stepId} select[required], #${stepId} textarea[required]`);
+  for (let input of inputs) {
+    if (!input.value) {
+      input.reportValidity();
+      return false;
+    }
+  }
+  return true;
+}
+
+function nextStep() {
+  if (currentStep < 4) {
+    if (!validateStep(`step${currentStep}`)) return;
+    currentStep++;
+    showStep(currentStep);
+  } else if (currentStep === 4 && currentDocStep < 3) {
+    if (!validateStep(`docStep${currentDocStep}`)) return;
+    currentDocStep++;
+    showDocStep(currentDocStep);
+  }
+}
+
+function prevStep() {
+  if (currentStep === 4 && currentDocStep > 1) {
+    currentDocStep--;
+    showDocStep(currentDocStep);
+  } else if (currentStep > 1) {
+    currentStep--;
+    showStep(currentStep);
+  }
+}
+
+function goToStep(step) {
+  if (step < currentStep) {
+    // Going backward = always allowed
+    showStep(step);
+  } else {
+    // Going forward = validate all previous steps
+    for (let s = 1; s < step; s++) {
+      if (!validateStep(`step${s}`)) {
+        return; // stop if any previous step invalid
+      }
+    }
+    showStep(step);
+  }
+}
+
+function updateButtons() {
+  const prevBtn = document.querySelector('.btn-prev');
+  const nextBtn = document.querySelector('.btn-next');
+  if (currentDocStep === 1) {
+    prevBtn.style.display = 'none';
+  } else {
+    prevBtn.style.display = 'inline-block';
+  }
+  if (currentDocStep === 3) {
+    nextBtn.style.display = 'none';
+  } else {
+    nextBtn.style.display = 'inline-block';
+  }
+}
+
+window.onload = () => {
+  showStep(currentStep);
+  // Make step indicators clickable
+  document.querySelectorAll('.steps li').forEach((li, index) => {
+    li.style.cursor = "pointer";
+    li.addEventListener("click", () => goToStep(index + 1));
+  });
+};
+
+  </script>
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-left">
+      <img src="public/images/logo.png" width="60" alt="Logo" style="margin-bottom:20px;">
+      <h2>Registration Form</h2>
+      <ul class="steps">
+        <li><span>1</span> Personal Details</li>
+        <li><span>2</span> Qualification</li>
+        <li><span>3</span> Preference</li>
+        <li><span>4</span> Documentation</li>
+      </ul>
+    </div>
+
+    <div class="form-right">
+      <!-- Step 1 -->
+      <div id="step1" class="form-step">
+        <h3>Your Personal Details</h3>
+        <div class="form-group">
+          <input type="text" placeholder="First Name *" required>
+          <input type="text" placeholder="Last Name *" required>
+        </div>
+
+        <h3>Your Residential Address</h3>
+        <div class="form-group full">
+          <input type="text" placeholder="Enter Your Address *" required>
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="Post Code *" required>
+          <input type="text" placeholder="City *" required>
+          <select required>
+            <option value="" disabled selected>Country *</option>
+            <option value="India">India</option>
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="Canada">Canada</option>
+          </select>
+        </div>
+
+        <h3>Contact Details</h3>
+        <div class="form-group">
+          <input type="email" placeholder="Enter Your Email *" required>
+          <input type="text" placeholder="Enter Your Contact No *" required>
+        </div>
+
+        <button type="button" class="btn" onclick="nextStep()">Next</button>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="step2" class="form-step" style="display:none;">
+        <h3>Your Qualification</h3>
+        <div class="form-group">
+          <select required>
+            <option value="" disabled selected>Qualification *</option>
+            <option value="Bachelor's">Bachelor's</option>
+            <option value="Master's">Master's</option>
+            <option value="PhD">PhD</option>
+          </select>
+          <select required>
+            <option value="" disabled selected>Select Your Department *</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Electrical Engineering">Electrical Engineering</option>
+            <option value="Mechanical Engineering">Mechanical Engineering</option>
+          </select>
+        </div>
+
+        <h3>Your Passed Out Year</h3>
+        <div class="form-group">
+          <input type="text" placeholder="Enter Your Passed Out Year *" required>
+          <select required>
+            <option value="" disabled selected>Your Marks Percentage *</option>
+            <option value="60%">60%</option>
+            <option value="70%">70%</option>
+            <option value="80%">80%</option>
+            <option value="90%">90%</option>
+          </select>
+        </div>
+
+        <h3>English Certificate (Optional)</h3>
+        <div class="form-group full">
+          <select>
+            <option value="" disabled selected>Select Certificate</option>
+            <option value="IELTS">IELTS</option>
+            <option value="TOEFL">TOEFL</option>
+            <option value="Cambridge">Cambridge</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn" onclick="nextStep()">Next</button>
+        <button type="button" class="btn" onclick="prevStep()">Previous</button>
+      </div>
+
+      <!-- Step 3 -->
+      <div id="step3" class="form-step" style="display:none;">
+        <h3>Would Like to Study In</h3>
+        <div class="form-group full">
+          <select required>
+            <option value="" disabled selected>Select Country *</option>
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="Canada">Canada</option>
+            <option value="Australia">Australia</option>
+          </select>
+        </div>
+
+        <h3>Reference Details</h3>
+        <div class="form-group full">
+          <select required>
+            <option value="" disabled selected>Reference Details *</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Colleague">Colleague</option>
+            <option value="Friend">Friend</option>
+          </select>
+        </div>
+
+        <h3>Remarks</h3>
+        <div class="form-group full">
+          <input type="text" placeholder="Your Remarks">
+        </div>
+
+        <button type="button" class="btn" onclick="nextStep()">Next</button>
+        <button type="button" class="btn" onclick="prevStep()">Previous</button>
+      </div>
+
+      <!-- Step 4 -->
+      <div id="step4" class="form-step" style="display:none;">
+        <!-- Doc Step 1 -->
+        <div id="docStep1" class="doc-step">
+          <h3>10th Mark Sheet *</h3>
+          <div class="form-group full">
+            
+            <input type="file" accept=".pdf,.jpg,.png" required>
+          </div>
+
+          <h3>12th Mark Sheet *</h3>
+          <div class="form-group full">
+            <input type="file" accept=".pdf,.jpg,.png" required>
+          </div>
+
+          <h3>Passport *</h3>
+          <div class="form-group full">
+            <input type="file" accept=".pdf,.jpg,.png" required>
+          </div>
+
+          <h3>Portfolio (Optional)</h3>
+          <div class="form-group full">
+            <input type="url" placeholder="Paste portfolio link">
+          </div>
+
+          <h3>Updated CV *</h3>
+          <div class="form-group full">
+            <input type="file" accept=".pdf,.doc,.docx" required>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-next" onclick="nextStep()">Next</button>
+            <button type="button" class="btn" onclick="prevStep()">Previous</button>
+          </div>
+        </div>
+
+        <!-- Doc Step 2 -->
+        <div id="docStep2" class="doc-step" style="display:none;">
+          <h3>UG Semester Mark Sheets *</h3>
+          <div class="form-group full">
+            <input type="file" multiple accept=".pdf,.jpg,.png" required>
+          </div>
+
+          <h3>UG Degree Certificate *</h3>
+          <div class="form-group full">
+            <input type="file" accept=".pdf,.jpg,.png" required>
+          </div>
+
+          <h3>UG Provisional Certificate *</h3>
+          <div class="form-group full">
+            <input type="file" accept=".pdf,.jpg,.png" required>
+          </div>
+
+          <h3>UG Consolidated Mark Sheet *</h3>
+          <div class="form-group full">
+            <input type="file" accept=".pdf,.jpg,.png" required>
+          </div>
+
+          <h3>Work Experience (Optional)</h3>
+          <div class="form-group full">
+            <input type="file" accept=".pdf,.jpg,.png,.doc,.docx">
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-next" onclick="nextStep()">Next</button>
+            <button type="button" class="btn btn-prev" onclick="prevStep()">Previous</button>
+          </div>
+        </div>
+
+        <!-- Doc Step 3 -->
+        <div id="docStep3" class="doc-step" style="display:none;">
+          <h3>Medium of Instruction (MOI) *</h3>
+          <div class="form-group full">
+            <input type="file" accept=".pdf,.jpg,.png" required>
+          </div>
+
+          <h3>Letter of Recommendation (LOR) *</h3>
+          <div class="form-group full">
+            <input type="file" multiple accept=".pdf,.jpg,.png" required>
+          </div>
+
+          <h3>Statement of Purpose (SOP) *</h3>
+          <div class="form-group full">
+            <input type="file" accept=".pdf,.doc,.docx" required>
+          </div>
+
+          <h3>English Language Test (Optional)</h3>
+          <div class="form-group full">
+            <input type="file" accept=".pdf,.jpg,.png">
+          </div>
+
+          <div class="btn-group">
+             <button type="button" class="btn btn-prev" onclick="window.location.href='index.html'">Submit</button>
+            <button type="button" class="btn btn-prev" onclick="prevStep()">Previous</button>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

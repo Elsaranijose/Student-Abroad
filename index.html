@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Europe — Hero & Explore Careers</title>
+    <style>
+      /* Color system: 
+         - Primary: teal #0ea5a8
+         - Neutrals: white #ffffff, black #0b0f14, gray #e5e7eb
+         - Accent: orange #f97316
+         Exactly 5 colors used. */
+      :root{
+        --primary:#0ea5a8;
+        --accent:#f97316;
+        --bg:#0b0f14;
+        --white:#ffffff;
+        --muted:#e5e7eb;
+
+        /* use the user's required Source URL for the hero background */
+        --bg-url: url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-a7FvlCb0eLuGMpjThIdifWmdIjx78z.png");
+      }
+
+      *{box-sizing:border-box}
+      html,body{height:100%}
+      html{scroll-behavior:smooth}
+      body{
+        margin:0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+        color:var(--white);
+        background-color:var(--bg);
+      }
+
+      /* Layout */
+      .hero{
+        position:relative;
+        min-height:100svh;
+        display:flex;
+        flex-direction:column;
+        isolation:isolate;
+        background-image: var(--bg-url);
+        background-size:cover;
+        background-position:center;
+        background-repeat:no-repeat;
+      }
+
+      /* Overlay tints + spotlight circle to echo the reference */
+      .hero::before{
+        content:"";
+        position:absolute;
+        inset:0;
+        background:rgba(0,0,0,0.28);
+        z-index:0;
+      }
+      .spot{
+        position:absolute;
+        inset:auto 0 0 0;
+        margin:auto;
+        top:50%;
+        transform:translateY(-50%);
+        width:min(90vmin, 980px);
+        aspect-ratio:1/1;
+        border-radius:50%;
+        z-index:0;
+        background:
+          radial-gradient(closest-side, rgba(255,255,255,0.28), rgba(255,255,255,0.08) 58%, rgba(0,0,0,0.28) 100%);
+        mix-blend-mode:lighten;
+        pointer-events:none;
+      }
+      .arc{
+        position:absolute;
+        inset:0;
+        z-index:0;
+        background:
+          radial-gradient(100% 60% at 0% 50%, rgba(0,0,0,0.35), transparent 60%) left/50% 100% no-repeat,
+          radial-gradient(100% 60% at 100% 50%, rgba(0,0,0,0.35), transparent 60%) right/50% 100% no-repeat;
+        pointer-events:none;
+      }
+
+      /* Header */
+      .header{
+        position:sticky;
+        top:0;
+        z-index:10;
+        backdrop-filter:saturate(120%) blur(0px);
+        transition:background-color .3s ease, box-shadow .3s ease, backdrop-filter .3s ease;
+      }
+      .header.scrolled{
+        background:rgba(11,15,20,0.45);
+        backdrop-filter:saturate(120%) blur(6px);
+        box-shadow:0 2px 24px rgba(0,0,0,0.25);
+      }
+      .nav{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:16px;
+        padding:16px clamp(16px, 4vw, 40px);
+      }
+      .brand{
+        display:flex; align-items:center; gap:12px;
+      }
+      .brand img{ width:42px; height:auto }
+      .brand span{ font-weight:700; letter-spacing:.02em }
+
+      .links{
+        display:none;
+        align-items:center; gap:18px;
+      }
+      .nav-link{
+        position:relative;
+        padding:8px 12px;
+        border-radius:999px;
+        color:var(--white);
+        opacity:.9;
+        text-decoration:none;
+        /* Enhanced transition for smoother hover effects */
+        transition: color .25s ease, background-color .25s ease, opacity .2s ease, transform .2s ease, box-shadow .25s ease;
+      }
+      /* Enhanced header menu hover effects with glow */
+      .nav-link::after{
+        content:"";
+        position:absolute;
+        left:12px; right:12px; bottom:6px;
+        height:2px; 
+        border-radius:2px;
+        background:linear-gradient(90deg, var(--primary), var(--accent));
+        transform:scaleX(0);
+        transform-origin:left;
+        transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .nav-link:hover,
+      .nav-link:focus-visible{
+        color:var(--white);
+        background:rgba(255,255,255,0.15);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(14,165,168,0.2);
+        outline:none;
+        opacity:1;
+      }
+      .nav-link:hover::after,
+      .nav-link:focus-visible::after{ 
+        transform:scaleX(1);
+      }
+
+      .cta{
+        --btn-bg: var(--white);
+        --btn-fg: #0b0f14;
+        background:var(--btn-bg);
+        color:var(--btn-fg);
+        border:0;
+        padding:10px 16px;
+        border-radius:12px;
+        font-weight:700;
+        letter-spacing:.02em;
+        cursor:pointer;
+        /* Enhanced button transition with cubic-bezier for smoother animation */
+        transition:transform .2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .25s ease, background-color .25s ease, color .25s ease;
+        box-shadow:0 6px 18px rgba(0,0,0,0.18);
+      }
+      /* Enhanced button hover effects with stronger glow */
+      .cta:hover,
+      .cta:focus-visible{
+        transform:translateY(-2px) scale(1.03);
+        box-shadow:0 12px 32px rgba(14,165,168,0.4), 0 0 20px rgba(14,165,168,0.2);
+        background:var(--primary);
+        color:var(--white);
+        outline:none;
+      }
+      .cta:active{
+        transform:translateY(0) scale(1.01);
+        transition:transform .1s ease;
+      }
+
+      .hamburger{
+        display:inline-flex;
+        align-items:center; justify-content:center;
+        width:42px; height:42px;
+        border-radius:8px;
+        border:1px solid rgba(255,255,255,0.18);
+        background:rgba(255,255,255,0.06);
+        color:var(--white);
+        cursor:pointer;
+        /* Added smooth transition for hamburger menu */
+        transition: background-color .25s ease, border-color .25s ease, transform .2s ease;
+      }
+      .hamburger:hover{
+        background:rgba(255,255,255,0.12);
+        border-color:rgba(255,255,255,0.3);
+        transform:translateY(-1px);
+      }
+      .hamburger:focus-visible{ 
+        outline:2px solid var(--primary);
+        background:rgba(255,255,255,0.12);
+      }
+
+      /* Mobile drawer */
+      .drawer{
+        position:absolute; inset:auto 16px auto auto; top:68px;
+        background:rgba(11,15,20,0.85);
+        border:1px solid rgba(255,255,255,0.1);
+        border-radius:12px;
+        padding:12px;
+        width:min(86vw, 320px);
+        backdrop-filter: blur(8px);
+        display:none;
+      }
+      .drawer.open{ display:block }
+      .drawer a{
+        display:block; padding:10px 12px; border-radius:10px; text-decoration:none; color:var(--white);
+        /* Enhanced mobile drawer link transitions */
+        transition:background-color .25s ease, transform .2s ease;
+      }
+      .drawer a:hover,
+      .drawer a:focus-visible{ 
+        background:rgba(255,255,255,0.15); 
+        transform:translateX(4px);
+        outline:none;
+      }
+      .drawer .split{ display:flex; gap:10px; margin-top:8px }
+      .drawer .split .cta{ flex:1 }
+
+      /* Hero content */
+      .container{
+        position:relative;
+        z-index:1;
+        margin-inline:auto;
+        width:min(1200px, calc(100% - clamp(24px, 8vw, 72px)));
+      }
+      .content{
+        margin-top: clamp(40px, 12vh, 120px);
+        text-align:center;
+      }
+      h1{
+        margin:0 0 12px 0;
+        font-weight:900;
+        font-size: clamp(40px, 10vw, 96px);
+        letter-spacing:.08em;
+        text-transform:uppercase;
+        /* Depth like the reference */
+        text-shadow:
+          0 2px 0 rgba(11,15,20,0.4),
+          0 8px 22px rgba(0,0,0,0.5);
+      }
+      .lead{
+        max-width: 70ch;
+        margin: 0 auto;
+        line-height:1.6;
+        font-size:clamp(14px, 2.4vw, 18px);
+        color:var(--muted);
+        text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+      }
+      .actions{ margin-top:24px }
+      .explore{
+        background:var(--white);
+        color:#0b0f14;
+        padding:12px 22px;
+        border-radius:14px;
+        font-weight:800;
+        /* Enhanced explore button transitions */
+        transition:transform .2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .25s ease, background-color .25s ease, color .25s ease;
+        box-shadow:0 8px 24px rgba(0,0,0,0.2);
+      }
+      .explore:hover,
+      .explore:focus-visible{
+        background:var(--primary);
+        color:var(--white);
+        transform:translateY(-2px) scale(1.04);
+        box-shadow:0 16px 40px rgba(14,165,168,0.45), 0 0 24px rgba(14,165,168,0.25);
+        outline:none;
+      }
+      .explore:active{
+        transform:translateY(0) scale(1.02);
+        transition:transform .1s ease;
+      }
+
+      /* Testimonials card */
+      .testi{
+        position:relative;
+        z-index:1;
+        margin-top: clamp(28px, 14vh, 160px);
+        display:flex; justify-content:flex-start;
+      }
+      .card1{
+        background:rgba(255,255,255,0.85);
+        color:#0b0f14;
+        border-radius:16px;
+        padding:14px 16px;
+        width:min(360px, 92%);
+        box-shadow:0 12px 32px rgba(0,0,0,0.25);
+        backdrop-filter: blur(4px);
+      }
+      .card h3{ font-size:14px; margin:0 0 10px 0; letter-spacing:.04em }
+      .faces{ display:flex; align-items:center; gap:6px; }
+      .face{
+        width:32px; height:32px; border-radius:50%;
+        border:2px solid var(--white);
+        background: var(--muted) center/cover no-repeat;
+      }
+      .stars{ display:flex; gap:2px; margin-left:auto }
+      .meta{ display:flex; align-items:center; gap:10px; margin-top:10px; }
+      .count{ font-weight:800 }
+      .muted{ color:#374151; font-size:12px }
+
+      /* Discover your vocation section */
+      .discover{
+        background: linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02)), var(--bg);
+        color: var(--white);
+        padding: clamp(48px, 8vw, 96px) 0;
+      }
+      .discover .container{ width:min(1200px, calc(100% - clamp(24px, 8vw, 72px))); margin-inline:auto }
+      .discover-grid{
+        display:grid;
+        align-items:center;
+        grid-template-columns: 1.15fr 1fr;
+        gap: clamp(24px, 5vw, 56px);
+      }
+      .art{
+        position:relative;
+        min-height: clamp(280px, 40vw, 520px);
+        isolation:isolate;
+      }
+      .shape{ position:absolute; border-radius:28px }
+      /* Large light panel with small top tab */
+      .shape-lg{
+        left:0; right:26%; top:0; bottom:14%;
+        background: var(--muted);
+      }
+      .shape-lg::before{
+        content:"";
+        position:absolute;
+        top:-28px; left:36px;
+        width:min(60%, 420px);
+        height:72px;
+        background:var(--muted);
+        border-radius:18px;
+      }
+      /* Mid grey panel that overlaps and has a softer corner */
+      .shape-mid{
+        left:42%; right:0; top:22%; bottom:8%;
+        background: rgba(11,15,20,0.45); /* from --bg with alpha, stays within palette */
+        border-radius:24px 24px 24px 48px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.25) inset;
+      }
+      /* Small light footer block */
+      .shape-sm{
+        left:12%; bottom:-22px;
+        width:min(48%, 420px);
+        height:clamp(72px, 16vw, 140px);
+        background: rgba(255,255,255,0.65);
+        border-radius:18px;
+      }
+
+      .eyebrow{
+        color: rgba(255,255,255,0.7);
+        font-size: clamp(14px, 2.2vw, 16px);
+        line-height:1.6;
+        margin:0 0 12px 0;
+      }
+      .headline{
+        font-weight:800;
+        font-size: clamp(28px, 5.6vw, 48px);
+        line-height:1.2;
+        margin:0 0 18px 0;
+        letter-spacing:.01em;
+      }
+      .brand-grad{
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        -webkit-background-clip:text;
+        background-clip:text;
+        color:transparent;
+      }
+      .desc{
+        color: rgba(255,255,255,0.8);
+        font-size: clamp(14px, 2.3vw, 16px);
+        line-height:1.8;
+        max-width: 62ch;
+        margin:0;
+        margin-left:28%;
+      }
+
+      /* Explore Careers Section */
+      .explore-section {
+        padding: clamp(48px, 8vw, 96px) 0;
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), var(--bg);
+      }
+      .explore-grid {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 24px;
+        text-align: center;
+        margin: 0 auto;
+        max-width: 1200px;
+      }
+      .card {
+        background: linear-gradient(135deg, var(--card-gradient-start), var(--card-gradient-end));
+        border-radius: 16px;
+        padding: 24px;
+        color: var(--white);
+        width: 22%;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      :root {
+        --card-gradient-start: #f97316;
+        --card-gradient-end: #a855f7;
+      }
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(249, 115, 22, 0.3);
+      }
+      .card h3 {
+        font-size: 1.5rem;
+        margin: 0 0 12px 0;
+        font-weight: 700;
+      }
+      .card p {
+        margin: 0;
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .card .icon {
+        font-size: 2rem;
+        margin-bottom: 12px;
+      }
+      .card.up { margin-top: -60px; }
+      .card.down { margin-top: 20px; }
+      .explore-intro {
+        text-align: center;
+        margin-bottom: 48px;
+      }
+      .services-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--white);
+        color: #0b0f14;
+        padding: 12px 24px;
+        border-radius: 24px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: transform 0.2s ease, box-shadow 0.25s ease;
+      }
+      .services-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(14, 165, 168, 0.4);
+        background: var(--primary);
+        color: var(--white);
+      }
+
+      /* Reveal animation */
+      .reveal{ opacity:0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease }
+      .reveal.in{ opacity:1; transform:none }
+
+      @media (max-width: 980px){
+        .discover-grid{ grid-template-columns: 1fr; }
+        .copy{ order:-1; text-align:left }
+        .art{ min-height: clamp(200px, 56vw, 420px) }
+        .shape-lg{ right:10%; bottom:20% }
+        .shape-mid{ left:46%; top:28% }
+        .shape-sm{ left:8% }
+        .explore-grid {
+          flex-direction: column;
+          align-items: center;
+        }
+        .card {
+          width: 100%;
+          margin: 0 0 24px 0;
+        }
+        .card.up, .card.down { margin: 0 0 24px 0; }
+      }
+
+      @media (min-width: 900px){
+        .links{ display:flex }
+        .hamburger, .drawer{ display:none }
+      }
+
+      /* New Image Gallery Section Styles */
+      .gallery-section {
+        padding: clamp(48px, 8vw, 96px) 0;
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), var(--bg);
+      }
+      .gallery-heading {
+        font-weight: 800;
+        font-size: clamp(28px, 5.6vw, 48px);
+        line-height: 1.2;
+        margin: 0 0 48px 0;
+        letter-spacing: 0.01em;
+        text-align: center;
+        color: var(--white);
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 clamp(24px, 8vw, 72px);
+      }
+      .gallery-item {
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .gallery-item img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+      .gallery-item p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: clamp(14px, 2.3vw, 16px);
+        line-height: 1.8;
+        margin-top: 12px;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .gallery-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(14, 165, 168, 0.3);
+      }
+      @media (max-width: 980px) {
+        .gallery-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Countries Marquee Section Styles */
+      .countries-marquee {
+        padding: clamp(24px, 4vw, 48px) 0;
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), var(--bg);
+        overflow: hidden;
+        position: relative;
+      }
+      .marquee-wrapper {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        animation: marquee 20s linear infinite;
+      }
+      .marquee-item {
+        display: flex;
+        align-items: center;
+        margin-right: 40px;
+        font-size: clamp(16px, 2vw, 20px);
+        color: var(--white);
+        opacity: 0.9;
+        transition: opacity 0.3s ease;
+      }
+      .marquee-item:hover {
+        opacity: 1;
+      }
+      .marquee-item img {
+        width: 30px;
+        height: 20px;
+        margin-right: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+      }
+      @keyframes marquee {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+      }
+      @media (max-width: 980px) {
+        .marquee-item {
+          margin-right: 20px;
+        }
+        .marquee-item img {
+          width: 24px;
+          height: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero" aria-label="Europe hero with city background">
+      <div class="spot" aria-hidden="true"></div>
+      <div class="arc" aria-hidden="true"></div>
+
+      <header class="header" id="site-header">
+        <nav class="nav" aria-label="Primary">
+          <a class="brand" href="#">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-RJuVWTd9oFypKr7kUdnnuazSy0kERw.png" alt="Brand logo" />
+            <span>WorldWings</span>
+          </a>
+
+          <div class="links" role="menubar" aria-label="Main menu">
+            <a class="nav-link" role="menuitem" href="#home">Home</a>
+            <a class="nav-link" role="menuitem" href="#about">About Us</a>
+            <a class="nav-link" role="menuitem" href="#services">Services</a>
+            <a class="nav-link" role="menuitem" href="#why">Why Study Abroad?</a>
+            <a class="nav-link" role="menuitem" href="#mbbs">MBBS</a>
+            <a class="nav-link" role="menuitem" href="#contact">Contact Us</a>
+          </div>
+
+          <button class="cta" type="button" onclick="window.location.href='form.html'">Students Login</button>
+
+          <button class="hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+
+          <div class="drawer" id="drawer" aria-label="Mobile menu">
+            <a href="#home">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#services">Services</a>
+            <a href="#why">Why Study Abroad?</a>
+            <a href="#mbbs">MBBS</a>
+            <a href="#contact">Contact Us</a>
+            <div class="split">
+              <button class="cta" type="button">Students Login</button>
+              <a class="cta" href="#explore" style="text-align:center; text-decoration:none;">Explore</a>
+            </div>
+          </div>
+        </nav>
+      </header>
+   
+
+      <main class="container content" id="home">
+        <h1>EUROPE</h1>
+        <p class="lead">
+          Our aim is to promote overseas education opportunities among students. To elevate, we have
+          established connections with 17 prominent countries namely Australia, Canada, Dubai, France,
+          Germany, Ireland, Italy.
+        </p>
+        <div class="actions">
+          <a id="explore" href="#about" class="explore" role="button" aria-label="Explore study opportunities">EXPLORE</a>
+        </div>
+
+        <div class="testi">
+          <div class="card1" aria-label="Student testimonials">
+            <h3>STUDENT TESTIMONIALS</h3>
+            <div class="faces">
+              <span class="face" style="background-image:url('/placeholder.svg?height=64&width=64')" aria-hidden="true"></span>
+              <span class="face" style="background-image:url('/placeholder.svg?height=64&width=64')" aria-hidden="true"></span>
+              <span class="face" style="background-image:url('/placeholder.svg?height=64&width=64')" aria-hidden="true"></span>
+              <span class="face" style="background-image:url('/placeholder.svg?height=64&width=64')" aria-hidden="true"></span>
+              <span class="face" style="background-image:url('/placeholder.svg?height=64&width=64')" aria-hidden="true"></span>
+              <div class="stars" aria-label="4.5 out of 5 stars">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true" opacity=".4"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              </div>
+            </div>
+            <div class="meta">
+              <strong class="count">400+</strong>
+              <span class="muted">Satisfied Customers</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="about" class="spacer" aria-hidden="true"></div>
+      </main>
+
+      <!-- New Slice 2 section -->
+      <section class="discover" aria-label="Discover your vocation">
+        <div class="container discover-grid">
+          <div class="art reveal" aria-hidden="true">
+            <div class="shape shape-lg"></div>
+            <div class="shape shape-mid"></div>
+            <div class="shape shape-sm"></div>
+          </div>
+
+          <div class="copy reveal">
+            <p class="eyebrow">
+              Advisewise is an amazing solution for all your dreams of studying abroad. Find your career with Advisewise.
+            </p>
+            <h2 class="headline">
+              Discover your vocation with <span class="brand-grad">Advisewise</span>.
+            </h2>
+            <p class="desc">
+              Our aim is to promote overseas education opportunities among students. To elevate, we have established
+              connections with 17 prominent countries namely Australia, Canada, Dubai, France, Germany, Ireland, Italy,
+              Malaysia, Netherlands, New Zealand, Poland, Singapore, Spain, Sweden, Switzerland, United Kingdom and United
+              States of America. We swear to strengthen an indestructible bond between the University &amp; the students for
+              a promising future.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Explore Careers Section -->
+      <section id="services" class="services-section">
+        <section class="explore-section" aria-label="Explore Careers">
+          <div class="container">
+            <div class="explore-intro reveal" id="explore-careers">
+              <h2 class="headline">Find Your Career with Advisewise</h2>
+              <p class="desc">Our content policy does not allow users to generate violent, adult, or political content, among other categories and human monitoring systems guard.</p>
+            </div>
+            <div class="explore-grid reveal">
+              <div class="card up">
+                <div class="icon"><i class="fas fa-trophy"></i></div>
+                <h3>Success Stories</h3>
+                <p>500+</p>
+                <p>Whether you're looking for quality or faster generation, there is many variants for you to cover all your needs!</p>
+              </div>
+              <div class="card down">
+                <div class="icon"><i class="fas fa-university"></i></div>
+                <h3>Universities</h3>
+                <p>3,000+</p>
+                <p>Whether you're looking for quality or faster generation, there is many variants for you to cover all your needs!</p>
+              </div>
+              <div class="card down">
+                <div class="icon"><i class="fas fa-book-open"></i></div>
+                <h3>Courses</h3>
+                <p>1,000+</p>
+                <p>Whether you're looking for quality or faster generation, there is many variants for you to cover all your needs!</p>
+              </div>
+              <div class="card up">
+                <div class="icon"><i class="fas fa-building"></i></div>
+                <h3>Branches</h3>
+                <p>4</p>
+                <p>Whether you're looking for quality or faster generation, there is many variants for you to cover all your needs!</p>
+              </div>
+            </div>
+            <div class="explore-intro reveal" id="explore-services" style="text-align: center; margin-top: 24px;">
+              <a href="#services" class="services-button">Our Services <span style="margin-left: 8px;">→</span></a>
+            </div>
+          </div>
+        </section>
+
+        <!-- New Image Gallery Section -->
+        <section class="gallery-section" aria-label="Image Gallery">
+          <div class="container">
+            <h2 class="gallery-heading">Surprise your audience with the perfect AI voice!</h2>
+            <div class="gallery-grid reveal">
+              <div class="gallery-item">
+                <img src="public/images/service1.png" alt="Service 1" />
+                <p>Text for Image 1 goes here.</p>
+              </div>
+              <div class="gallery-item">
+                <img src="public/images/service2.png" alt="Service 2" />
+                <p>Text for Image 2 goes here.</p>
+              </div>
+              <div class="gallery-item">
+                <img src="public/images/service3.png" alt="Service 3" />
+                <p>Text for Image 3 goes here.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Countries Marquee Section -->
+        <section class="countries-marquee" aria-label="Countries Marquee">
+          <div class="container">
+            <div class="marquee-wrapper">
+              <div class="marquee-item"><img src="https://flagcdn.com/au.svg" alt="Australia Flag" />Australia</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/ca.svg" alt="Canada Flag" />Canada</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/ae.svg" alt="Dubai (UAE) Flag" />Dubai</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/fr.svg" alt="France Flag" />France</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/de.svg" alt="Germany Flag" />Germany</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/ie.svg" alt="Ireland Flag" />Ireland</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/it.svg" alt="Italy Flag" />Italy</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/my.svg" alt="Malaysia Flag" />Malaysia</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/nl.svg" alt="Netherlands Flag" />Netherlands</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/nz.svg" alt="New Zealand Flag" />New Zealand</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/pl.svg" alt="Poland Flag" />Poland</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/sg.svg" alt="Singapore Flag" />Singapore</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/es.svg" alt="Spain Flag" />Spain</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/se.svg" alt="Sweden Flag" />Sweden</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/ch.svg" alt="Switzerland Flag" />Switzerland</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/gb.svg" alt="United Kingdom Flag" />United Kingdom</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/us.svg" alt="United States Flag" />United States</div>
+              <!-- Duplicate items for seamless loop -->
+              <div class="marquee-item"><img src="https://flagcdn.com/au.svg" alt="Australia Flag" />Australia</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/ca.svg" alt="Canada Flag" />Canada</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/ae.svg" alt="Dubai (UAE) Flag" />Dubai</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/fr.svg" alt="France Flag" />France</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/de.svg" alt="Germany Flag" />Germany</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/ie.svg" alt="Ireland Flag" />Ireland</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/it.svg" alt="Italy Flag" />Italy</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/my.svg" alt="Malaysia Flag" />Malaysia</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/nl.svg" alt="Netherlands Flag" />Netherlands</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/nz.svg" alt="New Zealand Flag" />New Zealand</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/pl.svg" alt="Poland Flag" />Poland</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/sg.svg" alt="Singapore Flag" />Singapore</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/es.svg" alt="Spain Flag" />Spain</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/se.svg" alt="Sweden Flag" />Sweden</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/ch.svg" alt="Switzerland Flag" />Switzerland</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/gb.svg" alt="United Kingdom Flag" />United Kingdom</div>
+              <div class="marquee-item"><img src="https://flagcdn.com/us.svg" alt="United States Flag" />United States</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <div id="contact" class="spacer" aria-hidden="true"></div>
+
+      <script>
+        // Mobile menu toggle
+        const btn = document.getElementById('menuBtn');
+        const drawer = document.getElementById('drawer');
+        btn?.addEventListener('click', () => {
+          const open = drawer.classList.toggle('open');
+          btn.setAttribute('aria-expanded', String(open));
+        });
+        drawer?.querySelectorAll('a')?.forEach(a => {
+          a.addEventListener('click', () => {
+            drawer.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        // Header background on scroll
+        const header = document.getElementById('site-header');
+        const onScroll = () => {
+          if (window.scrollY > 10) header.classList.add('scrolled');
+          else header.classList.remove('scrolled');
+        };
+        document.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        (function(){
+          const items = document.querySelectorAll('.reveal');
+          if (!('IntersectionObserver' in window) || !items.length) {
+            items.forEach(el => el.classList.add('in'));
+            return;
+          }
+          const io = new IntersectionObserver((entries)=>{
+            entries.forEach(e=>{
+              if(e.isIntersecting){
+                e.target.classList.add('in');
+                io.unobserve(e.target);
+              }
+            })
+          }, { threshold: 0.2 });
+          items.forEach(el=>io.observe(el));
+        })();
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+              behavior: 'smooth'
+            });
+          });
+        });
+      </script>
+    </body>
+</html>
