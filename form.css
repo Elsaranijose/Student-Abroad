@@ -6,14 +6,24 @@
 }
 
 body {
- background: url('public/images/background.png') no-repeat center center/cover;
-
+  background: url('public/images/background.png') no-repeat center center/cover;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.form-container {
+  display: flex;
+  width: 70%;
+  max-width: 95%;
+  height: 80vh;
+  border-radius: 15px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
 
 .form-left {
   width: 35%;
@@ -39,7 +49,7 @@ body {
 
 .steps li {
   position: relative;
-  margin: 30px 0;
+  margin: 50px 0; /* Increased from 30px to 50px for more space between steps */
   padding-left: 35px; /* space for circle */
   font-size: 16px;
   color: #fff;
@@ -54,20 +64,20 @@ body {
   height: 25px;
   line-height: 25px;
   border-radius: 50%;
-  background:#fff;
+  background: #fff;
   color: #504e4e9c;
   text-align: center;
   font-weight: bold;
 }
 
-/* Line connector */
+/* Line connector with increased length */
 .steps li::after {
   content: '';
   position: absolute;
   left: 11px; /* align with circle center */
-  top: 25px; /* from bottom of circle */
+  top: 30px; /* Start point of the line */
   width: 2px;
-  height: 100%;
+  height: 150%; /* Increased from 120% to 150% for longer line */
   background: #fff;
 }
 
@@ -86,6 +96,67 @@ body {
   width: 65%;
   padding: 40px;
   color: #5e5c5cdf;
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .form-container {
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+  }
+
+  .form-left {
+    width: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 0;
+  }
+
+  .form-right {
+    width: 100%;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 0;
+  }
+
+  .steps li {
+    margin: 40px 0; /* Adjusted for smaller screens */
+    font-size: 14px;
+  }
+
+  .steps li::after {
+    top: 25px;
+    height: 130%; /* Adjusted for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .form-left {
+    padding: 20px 10px;
+  }
+
+  .form-right {
+    padding: 20px;
+  }
+
+  .steps li {
+    margin: 30px 0; /* Adjusted for mobile */
+    padding-left: 30px;
+  }
+
+  .steps li span {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+  }
+
+  .steps li::after {
+    left: 9px;
+    top: 20px;
+    height: 120%; /* Adjusted for mobile */
+  }
 }
 
 .form-group {
@@ -105,22 +176,18 @@ body {
   background: rgba(255, 255, 255, 0.8);
 }
 
-/* Sets the same color for all input placeholders */
 .form-group input::placeholder {
   color: #666666a8;
 }
 
-/* Sets the color for the dropdowns */
 .form-group select {
   color: #666666a8;
 }
 
-/* Sets the color for all options */
 .form-group select option {
   color: #434242;
 }
 
-/* Sets the placeholder-like color for the first option */
 .form-group select option:first-child {
   color: #666666a8;
 }
@@ -128,8 +195,6 @@ body {
 .form-group.full {
   flex-direction: column;
 }
-
-
 
 .btn {
   background: #f44336;
@@ -148,25 +213,21 @@ body {
 
 .btn {
   margin: 5px;
-  padding: 10px 25px;      /* wider padding for oval look */
-  border-radius: 50px;     /* high value = pill/oval shape */
-  border: none;            /* optional: remove default border */
+  padding: 10px 25px;
+  border-radius: 50px;
+  border: none;
   cursor: pointer;
 }
 
- 
-
 .form-step {
-  padding-bottom: 60px;   /* space so buttons don’t overlap */
+  padding-bottom: 60px;
   position: relative;
 }
 
- 
-
 .form-right h3 {
   font-size: 18px;
-  margin-bottom: 12px;    /* spacing under heading */
-  margin-top: 30px;       /* spacing above each new section */
+  margin-bottom: 12px;
+  margin-top: 30px;
   color: #333;
   font-weight: 600;
 }
@@ -174,7 +235,7 @@ body {
 .form-group {
   display: flex;
   gap: 15px;
-  margin-bottom: 25px;    /* more spacing between groups */
+  margin-bottom: 25px;
 }
 
 .form-group.full {
@@ -186,7 +247,7 @@ body {
   flex: 1;
   padding: 12px 15px;
   border-radius: 8px;
-  border: 1px solid #ddd;   /* clean border */
+  border: 1px solid #ddd;
   outline: none;
   font-size: 14px;
   background: rgba(255, 255, 255, 0.95);
@@ -207,33 +268,9 @@ body {
 .form-group select option[disabled] {
   color: #888;
 }
-.form-container {
-  display: flex;
-  width: 70%;
-  max-width: 95%;
-  height: 80vh;             /* fixed height for all steps */
-  border-radius: 15px;
-  overflow: hidden;         /* prevent outside overflow */
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-}
 
-/* Right side scrolls internally */
-.form-right {
-  width: 65%;
-  padding: 40px;
-  color: #5e5c5cdf;
-  overflow-y: auto;         /* allow scrolling when content is long */
-  height: 100%;             /* take full height of container */
-}
-
-/* Ensure steps list also scrolls if too long */
- 
-
-/* Buttons always visible inside card */
 .form-step {
-  min-height: calc(100% - 80px);  /* leave space for buttons */
+  min-height: calc(100% - 80px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -254,34 +291,37 @@ body {
 .btn-prev {
   align-self: flex-start;
 }
+
 /* For Chrome, Edge, Safari */
 .form-right::-webkit-scrollbar {
-  width: 8px;             /* slim scrollbar */
+  width: 8px;
 }
 
 .form-right::-webkit-scrollbar-track {
-  background: transparent; /* fully transparent track */
+  background: transparent;
 }
 
 .form-right::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.2); /* semi-transparent thumb */
+  background-color: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
 
 .form-right::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0,0,0,0.4); /* darker on hover */
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 /* For Firefox */
 .form-right {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0,0,0,0.2) transparent;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
 
-    select, option {
-      font-weight: normal !important;
-    }
-    label .required {
-      color: red;
-      margin-left: 4px;
-    }
+select,
+option {
+  font-weight: normal !important;
+}
+
+label .required {
+  color: red;
+  margin-left: 4px;
+}
