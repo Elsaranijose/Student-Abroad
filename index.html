@@ -230,7 +230,7 @@ body {
     align-items: center;
     gap: 0.75rem;
     text-decoration: none;
-    color: var(--text-primary);
+    color:   white;
     font-weight: 700;
 }
 
@@ -411,8 +411,8 @@ body {
 .hero .lead {
   max-width: 200ch;  /* ⬆ longer lines */
   margin: 0 auto;
-  line-height: 1.4;
-  font-size: clamp(1rem, 2.8vw, 1.5rem);
+  line-height: 1.3;
+  font-size: clamp(0.85rem, 1.2vw, 1.2rem);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
@@ -616,6 +616,103 @@ body {
     transform: translate3d(0, 0, 0);
 }
 
+.universities-section {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #1a1a1a; /* dark background */
+    color: #fff;
+    position: relative;
+    z-index: 0; /* Ensure it doesn’t overlap header */
+}
+
+.uni-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.uni-subheading {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #f9a825; /* highlight color (orange/yellow) */
+}
+
+/* Slider container */
+.uni-slider {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+/* Track that moves logos */
+.uni-track {
+    display: flex;
+    gap: 2rem;
+    will-change: transform; /* Optimize rendering */
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Each logo card */
+.uni-card {
+    flex: 0 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 180px;
+    height: 100px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.uni-card img {
+    max-height: 60px;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* No CSS animation; JavaScript will handle it */
+.uni-track {
+    animation: none;
+}
+
+/* Optional: Pause on hover (handled by JavaScript) */
+.uni-slider:hover .uni-track {
+    /* Handled in JavaScript */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .uni-card {
+        width: 140px;
+        height: 80px;
+    }
+    .uni-card img {
+        max-height: 50px;
+    }
+    .uni-track {
+        gap: 1.5rem;
+    }
+}
+
+/* Ensure header remains fixed and above */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 4px var(--spacing-md);
+    z-index: 10000 !important; /* High z-index to stay above all content */
+    background: rgba(11, 15, 20, 0.65);
+    transition: background-color var(--transition-base), box-shadow var(--transition-shadow);
+}
+
+.header.scrolled {
+    background: rgba(11, 15, 20, 0.85);
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.25);
+}
+
 /* Discover Section */
 .discover {
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), var(--bg);
@@ -810,13 +907,21 @@ body {
 }
 
 
-
 .explore-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;  /* centers horizontally */
   align-items: center;
   gap: 1rem;
+  width: 100%;
   margin-top: 2rem;
+  text-align: center;
+}
+
+/* prevent parent from pushing it to the right */
+.explore-footer.reveal {
+  margin-top:5% ; 
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .nav-arrows {
@@ -1553,7 +1658,6 @@ body {
     100% { transform: translateY(0); }
 }
 
-/* Footer */
 .footer {
     background-color: #1a1a1a;
     color: #fff;
@@ -1607,20 +1711,28 @@ body {
 
 .footer-section h3 {
     font-size: 18px;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
     color: #fff;
     position: relative;
-    padding-bottom: 8px;
+    padding-bottom: 4px;
+    display: inline-block; /* shrink underline to text length */
 }
 
 .footer-section h3::after {
     content: "";
-    display: block;
-    width: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width:60%;            /* now matches only the text length */
     height: 2px;
     background-color: #fff;
-    margin-top: 8px;
 }
+
+
+.footer-section:nth-child(3) {
+    flex: 2; /* double width compared to others */
+}
+
 
 .footer-section ul {
     list-style: none;
@@ -1703,14 +1815,15 @@ body {
     color: #000;
 }
 
+
 /* Carousel Section */
 .carousel-section {
     position: relative;
     width: 100%;
     overflow: hidden;
-    margin: 20px 0;
-    background-color: #000000;
-    z-index: 5;
+    margin: 0; /* Remove margin to eliminate gaps */
+    background: #1a1a1a; /* Match .testimonials-section and .footer */
+    z-index: 0; /* Match .footer, below .header */
 }
 
 .carousel-container {
@@ -1720,14 +1833,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000000;
+    background: #1a1a1a; /* Match section background */
 }
 
 .carousel-slide {
     display: none;
     position: absolute;
-    width: 1428px;
-    height: 560px;
+    width: 100%; /* Adaptive width */
+    max-width: 1200px; /* Match container width */
+    height: 100%;
     object-fit: cover;
 }
 
@@ -1735,6 +1849,11 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 10px;
+    object-fit: cover; /* Ensure image fills slide */
+}
+
+.carousel-slide.active {
+    display: block; /* Show active slide */
 }
 
 .carousel-prev, .carousel-next {
@@ -2249,11 +2368,43 @@ body {
     opacity: 1;
     transform: none;
 }
+ {% comment %} student testimonials  {% endcomment %}
+
+.faces {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.face {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;                /* round shape */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 3px solid #f76bcdff;       /* ✅ pink outer ring */
+  margin-left: -12px;                /* overlap effect */
+  box-shadow: 0 0 5px rgba(0,0,0,0.15); /* subtle shadow */
+  transition: transform 0.2s ease;
+}
+
+.face:first-child {
+  margin-left: 0;
+}
+
+.face:hover {
+  transform: scale(1.1);
+}
+
+
+
+
     </style>
 </head>
 <body>
     <!-- Hero Section with Image Transitions -->
-    <section class="hero" aria-label="Hero with city background">
+    <section class="hero" aria-label="Hero with city background" id="hero-top">
         <!-- Background Image Layer -->
         <div id="image1_bg" class="image-element bg-layer"></div>
         <div id="image2_bg" class="image-element bg-layer"></div>
@@ -2273,7 +2424,7 @@ body {
                 </a>
 
                 <div class="links" role="menubar" aria-label="Main menu">
-                    <a class="nav-link" role="menuitem" href="#home">Home</a>
+                    <a class="nav-link" role="menuitem" href="#hero-top">Home</a>
                     <a class="nav-link" role="menuitem" href="#about">About Us</a>
                     <a class="nav-link" role="menuitem" href="#services">Services</a>
                     <a class="nav-link" role="menuitem" href="#why">Why Study Abroad?</a>
@@ -2290,7 +2441,7 @@ body {
                 </button>
 
                 <div class="drawer" id="drawer" aria-label="Mobile menu">
-                    <a href="#home">Home</a>
+                    <a href="#hero-top">Home</a>
                     <a href="#about">About Us</a>
                     <a href="#services">Services</a>
                     <a href="#why">Why Study Abroad?</a>
@@ -2304,7 +2455,7 @@ body {
             </nav>
         </header>
 
-        <main class="container content" id="home">
+        <main class="container content" id="hero-top">
             <h1 id="location-heading">EUROPE</h1>
             <p class="lead" id="description-text">
                 Our aim is to promote overseas education opportunities among students. To elevate, we have
@@ -2315,23 +2466,26 @@ body {
                 <a id="explore" href="#about" class="explore" role="button" aria-label="Explore study opportunities">EXPLORE</a>
             </div>
 
-            <div id="about" class="spacer" aria-hidden="true"></div>
+           
         </main>
         <div class="testi">
             <div class="card1" aria-label="Student testimonials">
                 <h3>STUDENT TESTIMONIALS</h3>
-                <div class="faces">
-                    <span class="face" style="background-image:url('/placeholder.svg?height=64&width=64')" aria-hidden="true"></span>
-                    <span class="face" style="background-image:url('/placeholder.svg?height=64&width=64')" aria-hidden="true"></span>
-                    <span class="face" style="background-image:url('/placeholder.svg?height=64&width=64')" aria-hidden="true"></span>
-                    <span class="face" style="background-image:url('/placeholder.svg?height=64&width=64')" aria-hidden="true"></span>
-                    <span class="face" style="background-image:url('/placeholder.svg?height=64&width=64')" aria-hidden="true"></span>
+               <div class="faces">
+                            <span class="face" style="background-image:url('public/images/component.png')" aria-hidden="true"></span>
+                            <span class="face" style="background-image:url('public/images/component1.png')" aria-hidden="true"></span>
+                            <span class="face" style="background-image:url('public/images/pic.png')" aria-hidden="true"></span>
+                            <span class="face" style="background-image:url('public/images/component2.png')" aria-hidden="true"></span>
+                            <span class="face" style="background-image:url('public/images/component3.png')" aria-hidden="true"></span>
+                            <span class="face" style="background-image:url('public/images/pic1.png')" aria-hidden="true"></span>
+
+
                     <div class="stars" aria-label="4.5 out of 5 stars">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true" opacity=".4"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#ff6ff5ff" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#ff6ff5ff" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#ff6ff5ff" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#ff6ff5ff" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#ff6ff5ff" aria-hidden="true" opacity=".4"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     </div>
                 </div>
                 <div class="meta">
@@ -2342,8 +2496,60 @@ body {
         </div>
     </section>
 
+   <section class="universities-section">
+  <h2 class="uni-heading">UNIVERSITIES</h2>
+  <p class="uni-subheading">WORLD OF OPPORTUNITIES OPEN FOR YOU</p>
+
+  <div class="uni-slider">
+    <div class="uni-track">
+      <div class="uni-card"><img src="public/images/uni.png" alt="University of Bradford"></div>
+      <div class="uni-card"><img src="public/images/uni1.png" alt="Coventry University"></div>
+      <div class="uni-card"><img src="public/images/uni2.png" alt="University of East London"></div>
+      <div class="uni-card"><img src="public/images/uni3.png" alt="University of Hertfordshire"></div>
+      <div class="uni-card"><img src="public/images/uni4.png" alt="University of Stirling"></div>
+      <div class="uni-card"><img src="public/images/uni5.png" alt="University of Bradford"></div>
+      <div class="uni-card"><img src="public/images/uni6.png" alt="Coventry University"></div>
+      <div class="uni-card"><img src="public/images/uni7.png" alt="University of East London"></div>
+      <div class="uni-card"><img src="public/images/uni8.png" alt="University of Hertfordshire"></div>
+      <div class="uni-card"><img src="public/images/uni9.png" alt="University of Stirling"></div>
+      <div class="uni-card"><img src="public/images/uni10.png" alt="University of Stirling"></div>
+      <div class="uni-card"><img src="public/images/uni11.png" alt="University of Bradford"></div>
+      <div class="uni-card"><img src="public/images/uni12.png" alt="Coventry University"></div>
+      <div class="uni-card"><img src="public/images/uni13.png" alt="University of East London"></div>
+      <div class="uni-card"><img src="public/images/uni14.png" alt="University of Hertfordshire"></div>
+      <div class="uni-card"><img src="public/images/uni15.png" alt="University of Stirling"></div>
+      <div class="uni-card"><img src="public/images/uni16.png" alt="University of Bradford"></div>
+      <div class="uni-card"><img src="public/images/uni17.png" alt="Coventry University"></div>
+      <div class="uni-card"><img src="public/images/uni18.png" alt="University of East London"></div>
+      <div class="uni-card"><img src="public/images/uni19.png" alt="University of Hertfordshire"></div>
+      <div class="uni-card"><img src="public/images/uni20.png" alt="University of Stirling"></div>
+      <div class="uni-card"><img src="public/images/uni21.png" alt="University of Stirling"></div>
+      <div class="uni-card"><img src="public/images/uni22.png" alt="University of Bradford"></div>
+      <div class="uni-card"><img src="public/images/uni23.png" alt="Coventry University"></div>
+      <div class="uni-card"><img src="public/images/uni24.png" alt="University of East London"></div>
+      <div class="uni-card"><img src="public/images/uni25.png" alt="University of Hertfordshire"></div>
+      <div class="uni-card"><img src="public/images/uni26.png" alt="University of Stirling"></div>
+      <div class="uni-card"><img src="public/images/uni27.png" alt="University of Bradford"></div>
+      <div class="uni-card"><img src="public/images/uni28.png" alt="Coventry University"></div>
+      <div class="uni-card"><img src="public/images/uni29.png" alt="University of East London"></div>
+      <div class="uni-card"><img src="public/images/uni30.png" alt="University of Hertfordshire"></div>
+      <div class="uni-card"><img src="public/images/uni31.png" alt="University of Stirling"></div>
+      <div class="uni-card"><img src="public/images/uni32.png" alt="University of Stirling"></div>
+      <div class="uni-card"><img src="public/images/uni33.png" alt="University of Bradford"></div>
+      <div class="uni-card"><img src="public/images/uni34.png" alt="Coventry University"></div>
+      <div class="uni-card"><img src="public/images/uni35.png" alt="University of East London"></div>
+      <div class="uni-card"><img src="public/images/uni36.png" alt="University of Hertfordshire"></div>
+      <div class="uni-card"><img src="public/images/uni37.png" alt="University of Stirling"></div>
+      <div class="uni-card"><img src="public/images/uni38.png" alt="University of Stirling"></div>
+      <div class="uni-card"><img src="public/images/uni39.png" alt="University of Stirling"></div>
+    </div>
+    </div>
+  </div>
+</section>
+
+
      <!-- Discover Section -->
-      <section class="discover" aria-label="Discover your vocation">
+      <section class="discover" aria-label="Discover your vocation" id="about">
         <div class="container discover-grid">
           <div class="art reveal" aria-hidden="true">
   <div class="shape shape-lg"></div>
@@ -2771,7 +2977,7 @@ body {
       <a href="public/brochure.pdf" class="download-btn" download>Download Our Brochure</a>
     </div>
   </footer>
-      <div id="contact" class="spacer" aria-hidden="true"></div>
+    
 
       <script>
         
@@ -3029,6 +3235,54 @@ document.addEventListener("DOMContentLoaded", () => {
             const totalCycleTime = (ANIMATION_DURATION * 2) + PAUSE_DURATION;
             setInterval(startTransition, totalCycleTime);
         })();
+
+        document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.querySelector('.uni-slider');
+    const track = document.querySelector('.uni-track');
+    const cards = document.querySelectorAll('.uni-card');
+    const cardWidth = cards[0].offsetWidth + 32; // Card width (180px) + gap (2rem = 32px, assuming 1rem = 16px)
+    const speed = 100; // Pixels per second (adjust for desired speed)
+    let lastTime = null;
+    let offset = 0;
+    let isAnimating = true;
+
+    function animate(currentTime) {
+        if (!isAnimating) return;
+
+        if (lastTime !== null) {
+            const deltaTime = (currentTime - lastTime) / 1000; // Time in seconds
+            offset -= speed * deltaTime; // Move by speed * time for consistent speed
+
+            track.style.transform = `translateX(${offset}px)`;
+
+            // When the first card is fully out of view, move it to the end
+            if (Math.abs(offset) >= cardWidth) {
+                track.appendChild(track.firstElementChild);
+                offset += cardWidth; // Reset offset to account for moved card
+                track.style.transform = `translateX(${offset}px)`; // Update position instantly
+            }
+        }
+
+        lastTime = currentTime;
+        requestAnimationFrame(animate);
+    }
+
+    // Start animation
+    requestAnimationFrame(animate);
+
+    // Pause on hover
+    slider.addEventListener('mouseenter', () => {
+        isAnimating = false;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        if (!isAnimating) {
+            isAnimating = true;
+            lastTime = null; // Reset lastTime to avoid jump
+            requestAnimationFrame(animate);
+        }
+    });
+});
     </script>
 </body>
 </html>
