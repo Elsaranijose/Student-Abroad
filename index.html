@@ -1815,15 +1815,14 @@ body {
     color: #000;
 }
 
-
 /* Carousel Section */
 .carousel-section {
     position: relative;
     width: 100%;
     overflow: hidden;
-    margin: 0; /* Remove margin to eliminate gaps */
-    background: #1a1a1a; /* Match .testimonials-section and .footer */
-    z-index: 0; /* Match .footer, below .header */
+    margin: 0;
+    background: #1a1a1a;
+    z-index: 0;
 }
 
 .carousel-container {
@@ -1833,27 +1832,73 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #1a1a1a; /* Match section background */
+    background: #1a1a1a;
 }
 
 .carousel-slide {
     display: none;
     position: absolute;
-    width: 100%; /* Adaptive width */
-    max-width: 1200px; /* Match container width */
+    width: 100%;
+    max-width: 1200px;
     height: 100%;
-    object-fit: cover;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
 }
 
-.carousel-slide img {
+.carousel-slide video {
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    object-fit: cover; /* Ensure image fills slide */
+    object-fit: cover;
+    background: #000;
+}
+
+/* Size adjustments for queue effect */
+.carousel-slide:nth-child(1) video {
+    width: 70%; /* Smallest rectangle */
+    height: 70%;
+    position: absolute;
+    left: 10%;
+    top: 20%;
+    z-index: 1;
+}
+
+.carousel-slide:nth-child(2) video {
+    width: 80%; /* Slightly larger than first */
+    height: 80%;
+    position: absolute;
+    left: 15%;
+    top: 15%;
+    z-index: 2;
+}
+
+.carousel-slide:nth-child(3) video {
+    width: 90%; /* Largest rectangle */
+    height: 90%;
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    z-index: 3;
 }
 
 .carousel-slide.active {
-    display: block; /* Show active slide */
+    display: block;
+    opacity: 1;
+    z-index: 3;
+}
+
+.carousel-slide.previous {
+    display: block;
+    opacity: 0.5; /* Partially visible behind */
+    z-index: 2;
+    transform: translateX(-20%) scale(0.9); /* Shift left and scale down */
+}
+
+.carousel-slide.next {
+    display: block;
+    opacity: 0.3; /* Even less visible */
+    z-index: 1;
+    transform: translateX(20%) scale(0.9); /* Shift right and scale down */
 }
 
 .carousel-prev, .carousel-next {
@@ -1875,6 +1920,47 @@ body {
 
 .carousel-next {
     right: 10px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .carousel-container {
+        height: 300px;
+    }
+    .carousel-slide:nth-child(1) video {
+        width: 40%;
+        height: 40%;
+    }
+    .carousel-slide:nth-child(2) video {
+        width: 50%;
+        height: 50%;
+    }
+    .carousel-slide:nth-child(3) video {
+        width: 60%;
+        height: 60%;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-container {
+        height: 200px;
+    }
+    .carousel-slide:nth-child(1) video {
+        width: 50%;
+        height: 40%;
+    }
+    .carousel-slide:nth-child(2) video {
+        width: 50%;
+        height: 50%;
+    }
+    .carousel-slide:nth-child(3) video {
+        width: 60%;
+        height: 60%;
+    }
+    .carousel-prev, .carousel-next {
+        padding: 5px;
+        font-size: 14px;
+    }
 }
 
 /* Responsive Styles */
@@ -2904,22 +2990,13 @@ body {
 <section class="carousel-section">
   <div class="carousel-container">
     <div class="carousel-slide">
-      <img src="public/images/carousel.png" alt="Slide 1">
+      <video src="public/images/video.mp4"></video>
     </div>
     <div class="carousel-slide">
-      <img src="public/images/carousel.png" alt="Slide 2">
+      <video src="public/images/video1.mp4"></video>
     </div>
     <div class="carousel-slide">
-      <img src="public/images/carousel.png" alt="Slide 3">
-    </div>
-    <div class="carousel-slide">
-      <img src="public/images/carousel.png" alt="Slide 4">
-    </div>
-    <div class="carousel-slide">
-      <img src="public/images/carousel.png" alt="Slide 5">
-    </div>
-    <div class="carousel-slide">
-      <img src="public/images/carousel.png" alt="Slide 6">
+      <video src="public/images/video2.mp4"></video>
     </div>
     <button class="carousel-prev">&#10094;</button>
     <button class="carousel-next">&#10095;</button>
@@ -3049,47 +3126,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 5000); // 5 seconds
 });
 
-     let slideIndex = 0;
-  const slides = document.getElementsByClassName("carousel-slide");
-
-  function showSlide(index) {
-    if (index >= slides.length) slideIndex = 0;
-    if (index < 0) slideIndex = slides.length - 1;
-    for (let i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-    }
-    slides[slideIndex].style.display = "block";
-  }
-
-  function nextSlide() {
-    slideIndex++;
-    showSlide(slideIndex);
-  }
-
-  function prevSlide() {
-    slideIndex--;
-    showSlide(slideIndex);
-  }
-
-  document.querySelector(".carousel-next").addEventListener("click", nextSlide);
-  document.querySelector(".carousel-prev").addEventListener("click", prevSlide);
-
-  // Auto-slide every 3 seconds
-  setInterval(nextSlide, 3000);
-
-  // Initialize with the first slide
-  showSlide(slideIndex);
-
-  // Handle window resize for responsiveness
-  window.addEventListener('resize', () => {
-    const width = window.innerWidth;
-    const slides = document.getElementsByClassName("carousel-slide");
-    for (let i = 0; i < slides.length; i++) {
-      slides[i].style.width = width > 768 ? '1428px' : (width > 480 ? '100%' : '300px');
-      slides[i].style.height = width > 768 ? '560px' : (width > 480 ? '400px' : '200px');
-    }
-    showSlide(slideIndex);
-  });
+    
 
   // Trigger resize on load
   window.dispatchEvent(new Event('resize'));
@@ -3282,6 +3319,75 @@ document.addEventListener("DOMContentLoaded", () => {
             requestAnimationFrame(animate);
         }
     });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const carouselSection = document.querySelector('.carousel-section');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const videos = document.querySelectorAll('.carousel-slide video');
+    const prevButton = document.querySelector('.carousel-prev');
+    const nextButton = document.querySelector('.carousel-next');
+    let currentSlide = 0;
+
+    function updateSlides() {
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active', 'previous', 'next');
+            if (videos[i]) {
+                videos[i].pause(); // Stop video when not active
+                videos[i].currentTime = 0; // Reset to start
+            }
+            slide.style.transform = 'none'; // Reset transform
+        });
+
+        slides[currentSlide].classList.add('active');
+        if (videos[currentSlide]) {
+            videos[currentSlide].play().catch(error => {
+                console.log("Autoplay prevented: ", error);
+                // No controls added to avoid play button
+            });
+        }
+
+        let prevSlide = (currentSlide - 1 + slides.length) % slides.length;
+        let nextSlide = (currentSlide + 1) % slides.length;
+        slides[prevSlide].classList.add('previous');
+        slides[nextSlide].classList.add('next');
+
+        // Position previous and next slides behind
+        slides[prevSlide].style.transform = 'translateX(-20%) scale(0.9)';
+        slides[nextSlide].style.transform = 'translateX(20%) scale(0.9)';
+    }
+
+    // Observe section visibility to stop video when out of view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                videos.forEach(video => {
+                    video.pause();
+                });
+            } else if (entry.isIntersecting && currentSlide >= 0) {
+                // Resume or start video when section is back in view
+                if (videos[currentSlide]) {
+                    videos[currentSlide].play().catch(error => {
+                        console.log("Autoplay prevented: ", error);
+                    });
+                }
+            }
+        });
+    }, { threshold: 0.5 }); // Trigger when 50% of section is visible
+
+    observer.observe(carouselSection);
+
+    prevButton.addEventListener('click', () => {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        updateSlides();
+    });
+
+    nextButton.addEventListener('click', () => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        updateSlides();
+    });
+
+    // Initial setup with autoplay attempt
+    updateSlides();
 });
     </script>
 </body>
