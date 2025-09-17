@@ -434,18 +434,17 @@ body {
     background: rgba(255, 255, 255, 0.85);
     color: #0b0f14;
     border-radius: 1rem;
-    padding: 0.875rem 1rem;
-    width: min(90%, 22.5rem);
+    padding: 0.75rem 0.875rem; /* Reduced padding for a smaller card */
+    width: min(80%, 18rem); /* Reduced width to 80% or 18rem (288px) max */
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(4px);
 }
 
 .hero .card1 h3 {
-    font-size: 0.875rem;
-    margin: 0 0 0.625rem 0;
+    font-size: 0.875rem; /* Kept the same for readability */
+    margin: 0 0 0.5rem 0; /* Slightly reduced margin */
     letter-spacing: 0.04em;
 }
-
 .hero .faces {
     display: flex;
     align-items: center;
@@ -456,7 +455,7 @@ body {
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
-    border: 2px solid var(--white);
+    border: 2px solid #f76bcdff;
     background: var(--muted) center/cover no-repeat;
     margin-left: -0.5rem;
 }
@@ -744,7 +743,9 @@ body {
     margin: 0 auto;
     text-align: center;
     max-width: 90%;
+    margin-bottom: 3rem;  /* ⬅ adds space below the description */
 }
+
 
 .explore-grid {
     display: flex;
@@ -871,6 +872,7 @@ body {
     z-index: 5;
 }
 
+
 .gallery-heading {
     font-weight: 800;
     font-size: clamp(1.5rem, 4vw, 2.5rem);
@@ -930,25 +932,16 @@ body {
 }
 
 .gallery-buttons {
-    position: absolute;
-    bottom: 5%;
-    left: 50%;
-    transform: translateX(-50%);
+    margin-top: 1rem;           /* space above buttons */
     display: flex;
+    justify-content: center;    /* center align */
     gap: 0.75rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;          /* keep in single row */
 }
 
-.gallery-buttons button {
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 1.5rem;
-    font-size: clamp(0.8rem, 2vw, 0.9rem);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+
+
+
 
 .language-btn {
     background: linear-gradient(69.88deg, #6549F6 2.47%, #FF611D 78.28%);
@@ -979,7 +972,7 @@ body {
 .age-btn {
     background: rgba(250, 243, 243, 1);
     color: #000000b7;
-    border: 1px solid #000;
+    border: 1px solid #302d2dad;   /* ✅ thicker black border */
     padding: 0.5rem 1rem;
     border-radius: 2rem;
     cursor: pointer;
@@ -990,6 +983,7 @@ body {
     min-width: 80px;
     text-align: center;
 }
+
 
 .language-btn:hover,
 .age-btn:hover {
@@ -1554,13 +1548,13 @@ body {
 }
 
 .testimonials-item:nth-child(1), .testimonials-text:nth-child(2) {
-    top: 15%;
-    left: clamp(5%, 10vw, 10%);
+    top: 30%;
+    left: clamp(5%, 10vw, 20%);
 }
 
 .testimonials-item:nth-child(3), .testimonials-text:nth-child(4) {
-    top: 35%;
-    left: clamp(20%, 15vw, 30%);
+    top: 30%;
+    left: clamp(30%, 15vw, 30%);
 }
 
 .testimonials-item:nth-child(5), .testimonials-text:nth-child(6) {
@@ -1569,18 +1563,18 @@ body {
 }
 
 .testimonials-item:nth-child(7), .testimonials-text:nth-child(8) {
-    top: 25%;
-    left: clamp(60%, 25vw, 70%);
+    top: 30%;
+    left: clamp(70%, 25vw, 70%);
 }
 
 .testimonials-item:nth-child(9), .testimonials-text:nth-child(10) {
     top: 45%;
-    left: clamp(10%, 15vw, 20%);
+    left: clamp(20%, 15vw, 20%);
 }
 
 .testimonials-item:nth-child(11), .testimonials-text:nth-child(12) {
     top: 65%;
-    left: clamp(50%, 20vw, 60%);
+    left: clamp(60%, 20vw, 60%);
 }
 
 @keyframes float {
@@ -1845,31 +1839,29 @@ body {
 }
 
 /* Student Testimonials */
+
 .faces {
-    display: flex;
-    align-items: center;
-    position: relative;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
-
 .face {
-    width: clamp(40px, 8vw, 45px);
-    height: clamp(40px, 8vw, 45px);
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: 3px solid #f76bcd;
-    margin-left: -0.75rem;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-    transition: transform 0.2s ease;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 3px solid #f76bcdff;
+  margin-left: -12px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
 }
-
 .face:first-child {
-    margin-left: 0;
+  margin-left: 0;
 }
-
 .face:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 /* Responsive Styles */
@@ -2849,151 +2841,153 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
     
+// Trigger resize on load
+window.dispatchEvent(new Event('resize'));
+(function() {
+    // Scope JavaScript to hero section
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
 
-  // Trigger resize on load
-  window.dispatchEvent(new Event('resize'));
-        (function() {
-            // Scope JavaScript to hero section
-            const hero = document.querySelector('.hero');
-            if (!hero) return;
+    const image1_bg = hero.querySelector('#image1_bg');
+    const image2_bg = hero.querySelector('#image2_bg');
+    const image1_fg = hero.querySelector('#image1_fg');
+    const image2_fg = hero.querySelector('#image2_fg');
+    const locationHeading = hero.querySelector('#location-heading');
+    const descriptionText = hero.querySelector('#description-text');
+    const menuBtn = hero.querySelector('#menuBtn');
+    const drawer = hero.querySelector('#drawer');
 
-            const image1_bg = hero.querySelector('#image1_bg');
-            const image2_bg = hero.querySelector('#image2_bg');
-            const image1_fg = hero.querySelector('#image1_fg');
-            const image2_fg = hero.querySelector('#image2_fg');
-            const locationHeading = hero.querySelector('#location-heading');
-            const descriptionText = hero.querySelector('#description-text');
-            const menuBtn = hero.querySelector('#menuBtn');
-            const drawer = hero.querySelector('#drawer');
+    // Image data with corresponding text content
+    const imageData = [
+        {
+            url: 'public/images/bg1.png',
+            location: 'EUROPE',
+            description: 'Our aim is to promote overseas education opportunities among students. To elevate, we have established connections with 17 prominent countries namely Australia, Canada, Dubai, France, Germany, Ireland, Italy.'
+        },
+        {
+            url: 'public/images/bg2.png',
+            location: 'USA',
+            description: 'Our aim is to promote overseas education opportunities among students. To elevate, we have established connections with 17 prominent countries namely Australia, Canada, Dubai, France, Germany, Ireland, Italy.'
+        },
+        {
+            url: 'public/images/bg3.png',
+            location: 'LONDON',
+            description: 'Our aim is to promote overseas education opportunities among students. To elevate, we have established connections with 17 prominent countries namely Australia, Canada, Dubai, France, Germany, Ireland, Italy.'
+        },
+        {
+            url: 'public/images/bg4.png',
+            location: 'NEWZEALAND',
+            description: 'Our aim is to promote overseas education opportunities among students. To elevate, we have established connections with 17 prominent countries namely Australia, Canada, Dubai, France, Germany, Ireland, Italy.'
+        },
+        {
+            url: 'public/images/bg5.png',
+            location: 'CANADA',
+            description: 'Our aim is to promote overseas education opportunities among students. To elevate, we have established connections with 17 prominent countries namely Australia, Canada, Dubai, France, Germany, Ireland, Italy.'
+        }
+    ];
 
-            // Image data with corresponding text content
-            const imageData = [
-                {
-                    url: 'public/images/bg1.png',
-                    location: 'EUROPE',
-                    description: 'Our aim is to promote overseas education opportunities among students. To elevate, we have established connections with 17 prominent countries namely Australia, Canada, Dubai, France, Germany, Ireland, Italy.'
-                },
-                {
-                    url: 'public/images/bg2.png',
-                    location: 'USA',
-                    description: 'Our aim is to promote overseas education opportunities among students. To elevate, we have established connections with 17 prominent countries namely Australia, Canada, Dubai, France, Germany, Ireland, Italy.'
-                },
-                {
-                    url: 'public/images/bg3.png',
-                    location: 'LONDON',
-                    description: 'Our aim is to promote overseas education opportunities among students. To elevate, we have established connections with 17 prominent countries namely Australia, Canada, Dubai, France, Germany, Ireland, Italy.'
-                },
-                {
-                    url: 'public/images/bg4.png',
-                    location: 'NEWZEALAND',
-                    description: 'Our aim is to promote overseas education opportunities among students. To elevate, we have established connections with 17 prominent countries namely Australia, Canada, Dubai, France, Germany, Ireland, Italy.'
-                },
-                {
-                    url: 'public/images/bg5.png',
-                    location: 'CANADA',
-                    description: 'Our aim is to promote overseas education opportunities among students. To elevate, we have established connections with 17 prominent countries namely Australia, Canada, Dubai, France, Germany, Ireland, Italy.'
-                }
-            ];
+    let currentIndex = 0;
+    let isImg1Active = true;
+    let isAnimating = false;
 
-            let currentIndex = 0;
-            let isImg1Active = true;
-            let isAnimating = false;
+    const ANIMATION_DURATION = 2500;
+    const PAUSE_DURATION = 1500;
 
-            const ANIMATION_DURATION = 2500;
-            const PAUSE_DURATION = 5000;
+    // Dynamic bounding box for perfect rotation (responsive)
+    function updateFgLayers() {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const angleRad = Math.PI;
+        const newW = w * Math.abs(Math.cos(angleRad)) + h * Math.abs(Math.sin(angleRad));
+        const newH = w * Math.abs(Math.sin(angleRad)) + h * Math.cos(angleRad);
+        const offsetX = (newW - w) / 2;
+        const offsetY = (newH - h) / 2;
 
-            // Dynamic bounding box for perfect rotation (responsive)
-            function updateFgLayers() {
-                const w = window.innerWidth;
-                const h = window.innerHeight;
-                const angleRad = Math.PI;
-                const newW = w * Math.abs(Math.cos(angleRad)) + h * Math.abs(Math.sin(angleRad));
-                const newH = w * Math.abs(Math.sin(angleRad)) + h * Math.cos(angleRad);
-                const offsetX = (newW - w) / 2;
-                const offsetY = (newH - h) / 2;
+        const fgLayers = [image1_fg, image2_fg];
+        fgLayers.forEach(layer => {
+            layer.style.width = `${newW}px`;
+            layer.style.height = `${newH}px`;
+            layer.style.left = `-${offsetX}px`;
+            layer.style.top = `-${offsetY}px`;
+        });
+    }
 
-                const fgLayers = [image1_fg, image2_fg];
-                fgLayers.forEach(layer => {
-                    layer.style.width = `${newW}px`;
-                    layer.style.height = `${newH}px`;
-                    layer.style.left = `-${offsetX}px`;
-                    layer.style.top = `-${offsetY}px`;
-                });
-            }
+    function startTransition() {
+        if (isAnimating) return;
+        isAnimating = true;
 
-            function startTransition() {
-                if (isAnimating) return;
-                isAnimating = true;
+        const outImgBg = isImg1Active ? image1_bg : image2_bg;
+        const inImgBg = isImg1Active ? image2_bg : image1_bg;
+        const outImgFg = isImg1Active ? image1_fg : image2_fg;
+        const inImgFg = isImg1Active ? image2_fg : image1_fg;
 
-                const outImgBg = isImg1Active ? image1_bg : image2_bg;
-                const inImgBg = isImg1Active ? image2_bg : image1_bg;
-                const outImgFg = isImg1Active ? image1_fg : image2_fg;
-                const inImgFg = isImg1Active ? image2_fg : image1_fg;
+        currentIndex = (currentIndex + 1) % imageData.length;
+        const nextImage = imageData[currentIndex];
+        const nextImageUrl = `url(${nextImage.url})`;
 
-                currentIndex = (currentIndex + 1) % imageData.length;
-                const nextImage = imageData[currentIndex];
-                const nextImageUrl = `url(${nextImage.url})`;
+        inImgBg.style.backgroundImage = nextImageUrl;
+        inImgFg.style.backgroundImage = nextImageUrl;
 
-                inImgBg.style.backgroundImage = nextImageUrl;
-                inImgFg.style.backgroundImage = nextImageUrl;
+        outImgBg.className = 'image-element bg-layer animate-out';
+        outImgFg.className = 'image-element fg-layer donut-animate-out';
 
-                outImgBg.className = 'image-element bg-layer animate-out';
-                outImgFg.className = 'image-element fg-layer donut-animate-out';
+        setTimeout(() => {
+            locationHeading.textContent = nextImage.location;
+            descriptionText.textContent = nextImage.description;
 
-                setTimeout(() => {
-                    locationHeading.textContent = nextImage.location;
-                    descriptionText.textContent = nextImage.description;
+            outImgBg.style.visibility = 'hidden';
+            outImgFg.style.visibility = 'hidden';
+            outImgBg.style.opacity = '0';
+            outImgFg.style.opacity = '0';
+            outImgBg.className = 'image-element bg-layer';
+            outImgFg.className = 'image-element fg-layer';
 
-                    outImgBg.style.visibility = 'hidden';
-                    outImgFg.style.visibility = 'hidden';
-                    outImgBg.style.opacity = '0';
-                    outImgFg.style.opacity = '0';
-                    outImgBg.className = 'image-element bg-layer';
-                    outImgFg.className = 'image-element fg-layer';
+            inImgBg.offsetHeight;
+            inImgFg.offsetHeight;
 
-                    inImgBg.offsetHeight;
-                    inImgFg.offsetHeight;
+            inImgBg.style.visibility = 'visible';
+            inImgFg.style.visibility = 'visible';
+            inImgBg.style.opacity = '1';
+            inImgFg.style.opacity = '1';
+            inImgBg.className = 'image-element bg-layer animate-in';
+            inImgFg.className = 'image-element fg-layer donut-animate-in';
 
-                    inImgBg.style.visibility = 'visible';
-                    inImgFg.style.visibility = 'visible';
-                    inImgBg.style.opacity = '1';
-                    inImgFg.style.opacity = '1';
-                    inImgBg.className = 'image-element bg-layer animate-in';
-                    inImgFg.className = 'image-element fg-layer donut-animate-in';
+            setTimeout(() => {
+                inImgBg.className = 'image-element bg-layer';
+                inImgFg.className = 'image-element fg-layer';
+                isImg1Active = !isImg1Active;
+                isAnimating = false;
+            }, ANIMATION_DURATION);
+        }, ANIMATION_DURATION);
+    }
 
-                    setTimeout(() => {
-                        inImgBg.className = 'image-element bg-layer';
-                        inImgFg.className = 'image-element fg-layer';
-                        isImg1Active = !isImg1Active;
-                        isAnimating = false;
-                    }, ANIMATION_DURATION);
+    // Mobile menu toggle
+    menuBtn.addEventListener('click', () => {
+        const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', !isExpanded);
+        drawer.classList.toggle('active');
+    });
 
-                }, ANIMATION_DURATION);
-            }
+    // Initialization
+    const initialImage = imageData[currentIndex];
+    const initialImageUrl = `url(${initialImage.url})`;
+    image1_bg.style.backgroundImage = initialImageUrl;
+    image1_fg.style.backgroundImage = initialImageUrl;
 
-            // Mobile menu toggle
-            menuBtn.addEventListener('click', () => {
-                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
-                menuBtn.setAttribute('aria-expanded', !isExpanded);
-                drawer.classList.toggle('active');
-            });
+    locationHeading.textContent = initialImage.location;
+    descriptionText.textContent = initialImage.description;
 
-            // Initialization
-            const initialImage = imageData[currentIndex];
-            const initialImageUrl = `url(${initialImage.url})`;
-            image1_bg.style.backgroundImage = initialImageUrl;
-            image1_fg.style.backgroundImage = initialImageUrl;
+    // Set initial bounding box and listen for resize
+    updateFgLayers();
+    window.addEventListener('resize', updateFgLayers);
 
-            locationHeading.textContent = initialImage.location;
-            descriptionText.textContent = initialImage.description;
+    // Start the first transition immediately
+    startTransition();
 
-            // Set initial bounding box and listen for resize
-            updateFgLayers();
-            window.addEventListener('resize', updateFgLayers);
-
-            const totalCycleTime = (ANIMATION_DURATION * 2) + PAUSE_DURATION;
-            setInterval(startTransition, totalCycleTime);
-        })();
+    // Set interval for subsequent transitions
+    const totalCycleTime = (ANIMATION_DURATION * 2) + PAUSE_DURATION;
+    setInterval(startTransition, totalCycleTime);
+})();
 
         document.addEventListener('DOMContentLoaded', () => {
     const slider = document.querySelector('.uni-slider');
