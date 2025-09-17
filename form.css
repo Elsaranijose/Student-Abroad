@@ -7,7 +7,7 @@
 
 body {
   background: url('public/images/background.png') no-repeat center center/cover;
-  height: 100vh;
+  min-height: 100vh; /* Changed from height to min-height for flexibility */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,7 +28,7 @@ body {
 .form-left {
   width: 35%;
   margin: 2%;
-  padding: 40px 20px;
+  padding: clamp(20px, 4vw, 40px) clamp(10px, 2vw, 20px);
   color: #fff;
   background: rgba(70, 63, 63, 0.205);
   border-top-left-radius: 15px;
@@ -36,22 +36,22 @@ body {
 }
 
 .form-left h2 {
-  margin-bottom: 40px;
-  font-size: 22px;
+  margin-bottom: clamp(20px, 3vw, 40px);
+  font-size: clamp(18px, 2.5vw, 22px);
 }
 
 .steps {
   list-style: none;
-  margin: 20px 0;
+  margin: clamp(10px, 2vw, 20px) 0;
   padding: 0;
   position: relative;
 }
 
 .steps li {
   position: relative;
-  margin: 50px 0; /* Increased from 30px to 50px for more space between steps */
-  padding-left: 35px; /* space for circle */
-  font-size: 16px;
+  margin: clamp(30px, 5vw, 50px) 0; /* Dynamic spacing between steps */
+  padding-left: clamp(25px, 3vw, 35px); /* Dynamic space for circle */
+  font-size: clamp(14px, 2vw, 16px);
   color: #fff;
 }
 
@@ -60,9 +60,9 @@ body {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
+  width: clamp(20px, 2.5vw, 25px);
+  height: clamp(20px, 2.5vw, 25px);
+  line-height: clamp(20px, 2.5vw, 25px);
   border-radius: 50%;
   background: #fff;
   color: #504e4e9c;
@@ -70,14 +70,14 @@ body {
   font-weight: bold;
 }
 
-/* Line connector with increased length */
+/* Line connector with dynamic length */
 .steps li::after {
   content: '';
   position: absolute;
-  left: 11px; /* align with circle center */
-  top: 30px; /* Start point of the line */
+  left: clamp(9px, 1.5vw, 11px); /* Align with circle center */
+  top: clamp(20px, 2vw, 30px); /* Start point of the line */
   width: 2px;
-  height: 150%; /* Increased from 120% to 150% for longer line */
+  height: clamp(120%, 130%, 150%); /* Dynamic line length */
   background: #fff;
 }
 
@@ -94,22 +94,91 @@ body {
 
 .form-right {
   width: 65%;
-  padding: 40px;
+  padding: clamp(20px, 3vw, 40px);
   color: #5e5c5cdf;
   overflow-y: auto;
   height: 100%;
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 480px) { /* Phone */
   .form-container {
     flex-direction: column;
     width: 90%;
     height: auto;
+    min-height: 90vh; /* Ensure it fills the screen */
   }
 
   .form-left {
     width: 100%;
+    margin: 0 0 clamp(10px, 2vw, 20px) 0;
+    padding: clamp(15px, 3vw, 20px);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 0;
+  }
+
+  .form-left h2 {
+    font-size: clamp(16px, 4vw, 18px);
+    margin-bottom: clamp(15px, 2vw, 20px);
+  }
+
+  .steps li {
+    margin: clamp(20px, 4vw, 30px) 0;
+    padding-left: clamp(20px, 3vw, 30px);
+    font-size: clamp(12px, 3vw, 14px);
+  }
+
+  .steps li span {
+    width: clamp(15px, 2.5vw, 20px);
+    height: clamp(15px, 2.5vw, 20px);
+    line-height: clamp(15px, 2.5vw, 20px);
+  }
+
+  .steps li::after {
+    left: clamp(7px, 1.5vw, 9px);
+    top: clamp(15px, 2vw, 20px);
+    height: clamp(110%, 120%, 130%);
+  }
+
+  .form-right {
+    width: 100%;
+    padding: clamp(15px, 2vw, 20px);
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 0;
+  }
+
+  .form-group {
+    flex-direction: column;
+    gap: clamp(10px, 2vw, 15px);
+    margin-bottom: clamp(15px, 2vw, 20px);
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: clamp(8px, 2vw, 12px);
+    font-size: clamp(12px, 2.5vw, 14px);
+  }
+
+  .btn {
+    padding: clamp(8px, 2vw, 12px) clamp(20px, 4vw, 30px);
+    font-size: clamp(14px, 2.5vw, 16px);
+    margin: clamp(10px, 2vw, 15px) 5px 0 5px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) { /* Tablet */
+  .form-container {
+    flex-direction: column;
+    width: 85%;
+    height: auto;
+    min-height: 85vh;
+  }
+
+  .form-left {
+    width: 100%;
+    margin: 0 0 clamp(15px, 2vw, 20px) 0;
+    padding: clamp(20px, 3vw, 30px);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 0;
@@ -117,139 +186,72 @@ body {
 
   .form-right {
     width: 100%;
+    padding: clamp(20px, 3vw, 30px);
     border-bottom-left-radius: 15px;
     border-top-right-radius: 0;
   }
 
   .steps li {
-    margin: 40px 0; /* Adjusted for smaller screens */
-    font-size: 14px;
+    margin: clamp(30px, 4vw, 40px) 0;
+    font-size: clamp(13px, 2vw, 14px);
   }
 
-  .steps li::after {
-    top: 25px;
-    height: 130%; /* Adjusted for smaller screens */
+  .form-group {
+    gap: clamp(12px, 2vw, 15px);
+    margin-bottom: clamp(20px, 2vw, 25px);
   }
 }
 
-@media (max-width: 480px) {
+@media (min-width: 769px) and (max-width: 1024px) { /* Laptop */
+  .form-container {
+    width: 75%;
+    height: 85vh;
+  }
+
   .form-left {
-    padding: 20px 10px;
+    padding: clamp(25px, 3vw, 35px) clamp(15px, 2vw, 20px);
   }
 
   .form-right {
-    padding: 20px;
+    padding: clamp(25px, 3vw, 35px);
   }
 
   .steps li {
-    margin: 30px 0; /* Adjusted for mobile */
-    padding-left: 30px;
-  }
-
-  .steps li span {
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
-  }
-
-  .steps li::after {
-    left: 9px;
-    top: 20px;
-    height: 120%; /* Adjusted for mobile */
+    margin: clamp(40px, 5vw, 50px) 0;
+    font-size: clamp(15px, 2vw, 16px);
   }
 }
 
+@media (min-width: 1025px) { /* Desktop */
+  .form-container {
+    width: 70%;
+    height: 80vh;
+  }
+
+  .form-left {
+    padding: clamp(30px, 3vw, 40px) clamp(15px, 2vw, 20px);
+  }
+
+  .form-right {
+    padding: clamp(30px, 3vw, 40px);
+  }
+}
+
+/* Form group and button styles remain consistent across breakpoints */
 .form-group {
   display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: clamp(10px, 2vw, 15px);
+  margin-bottom: clamp(20px, 2vw, 25px);
 }
 
 .form-group input,
 .form-group select {
   flex: 1;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  font-size: 14px;
-  background: rgba(255, 255, 255, 0.8);
-}
-
-.form-group input::placeholder {
-  color: #666666a8;
-}
-
-.form-group select {
-  color: #666666a8;
-}
-
-.form-group select option {
-  color: #434242;
-}
-
-.form-group select option:first-child {
-  color: #666666a8;
-}
-
-.form-group.full {
-  flex-direction: column;
-}
-
-.btn {
-  background: #f44336;
-  color: #fff;
-  padding: 12px 30px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  font-size: 16px;
-  float: right;
-}
-
-.btn:hover {
-  background: #d32f2f;
-}
-
-.btn {
-  margin: 5px;
-  padding: 10px 25px;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-}
-
-.form-step {
-  padding-bottom: 60px;
-  position: relative;
-}
-
-.form-right h3 {
-  font-size: 18px;
-  margin-bottom: 12px;
-  margin-top: 30px;
-  color: #333;
-  font-weight: 600;
-}
-
-.form-group {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 25px;
-}
-
-.form-group.full {
-  flex-direction: column;
-}
-
-.form-group input,
-.form-group select {
-  flex: 1;
-  padding: 12px 15px;
+  padding: clamp(10px, 2vw, 12px);
   border-radius: 8px;
   border: 1px solid #ddd;
   outline: none;
-  font-size: 14px;
+  font-size: clamp(12px, 2vw, 14px);
   background: rgba(255, 255, 255, 0.95);
 }
 
@@ -269,22 +271,19 @@ body {
   color: #888;
 }
 
-.form-step {
-  min-height: calc(100% - 80px);
-  display: flex;
+.form-group.full {
   flex-direction: column;
-  justify-content: flex-start;
 }
 
 .btn {
   background: #f44336;
   color: #fff;
-  padding: 12px 30px;
+  padding: clamp(10px, 2vw, 12px) clamp(20px, 4vw, 30px);
   border: none;
   border-radius: 25px;
   cursor: pointer;
-  font-size: 16px;
-  margin: 15px 5px 0 5px;
+  font-size: clamp(14px, 2.5vw, 16px);
+  margin: clamp(10px, 2vw, 15px) 5px 0 5px;
   align-self: flex-end;
 }
 
@@ -292,9 +291,13 @@ body {
   align-self: flex-start;
 }
 
-/* For Chrome, Edge, Safari */
+.btn:hover {
+  background: #d32f2f;
+}
+
+/* Scrollbar styles */
 .form-right::-webkit-scrollbar {
-  width: 8px;
+  width: clamp(6px, 1vw, 8px);
 }
 
 .form-right::-webkit-scrollbar-track {
@@ -303,14 +306,13 @@ body {
 
 .form-right::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+  border-radius: clamp(2px, 0.5vw, 4px);
 }
 
 .form-right::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* For Firefox */
 .form-right {
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
