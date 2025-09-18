@@ -1237,19 +1237,7 @@
     from { opacity: 0.2; }
     to { opacity: 0.8; }
 }
-
-.automation-card:nth-child(1)::before {
-    content: '';
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    width: 60px;
-    height: 60px;
-    background: url('public/images/activity.png') no-repeat center center;
-    background-size: contain;
-    z-index: 1;
-}
-
+.automation-card:nth-child(1)::before,
 .automation-card:nth-child(2)::before,
 .automation-card:nth-child(3)::before,
 .automation-card:nth-child(4)::before,
@@ -1262,33 +1250,42 @@
     width: 200px;
     height: 200px;
     background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top left;
     z-index: 1;
 }
 
+/* Individual icons */
+.automation-card:nth-child(1)::before {
+    background-image: url('public/images/icon.png');
+}
+
 .automation-card:nth-child(2)::before {
-    background: url('public/images/icon.png') no-repeat top left;
+    background-image: url('public/images/icon1.png');
 }
 
 .automation-card:nth-child(3)::before {
-    background: url('public/images/icon1.png') no-repeat top left;
+    background-image: url('public/images/icons.png');
 }
 
 .automation-card:nth-child(4)::before {
-    background: url('public/images/icon2.png') no-repeat top left;
+    background-image: url('public/images/icon2.png');
 }
 
 .automation-card:nth-child(5)::before {
-    background: url('public/images/icon3.png') no-repeat top left;
+    background-image: url('public/images/icon3.png');
 }
 
 .automation-card:nth-child(6)::before {
-    background: url('public/images/icon4.png') no-repeat top left;
+    background-image: url('public/images/icon4.png');
 }
 
+/* Hover effect */
 .automation-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 12px 24px rgba(193, 231, 232, 0.3);
 }
+
 
 .card-text h3 {
     font-size: 1.2rem;
@@ -1538,6 +1535,59 @@
     transform: translateY(-2px);
 }
 
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .contact-image1 {
+        flex: 0 0 100%;
+        min-height: clamp(15rem, 40vw, 25rem);
+    }
+
+    .contact-form {
+        flex: 0 0 100%;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr; /* Single column on mobile */
+    }
+
+    .contact-content {
+        padding: 0 1rem;
+    }
+
+    .contact-desc {
+        max-width: 100%;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-image1 {
+        min-height: clamp(12rem, 30vw, 20rem);
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: clamp(0.75rem, 2vw, 0.875rem);
+    }
+
+    .contact-heading {
+        font-size: clamp(1.25rem, 5vw, 1.75rem);
+    }
+
+    .contact-desc {
+        font-size: clamp(0.75rem, 2vw, 0.875rem);
+    }
+
+    .contact-form .cta {
+        padding: clamp(0.5rem, 2vw, 0.625rem) 0.875rem;
+    }
+}
+
 /* Testimonials Section */
 .testimonials-section {
     position: relative;
@@ -1679,11 +1729,36 @@
     flex: 0 0 auto;
     margin-right: 40px;
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .footer-logo img {
     max-height: 100px;
     width: auto;
+    margin-bottom: 15px;
+}
+
+.footer-logo .download-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    border: 1px solid #007bff;
+    transition: all 0.3s ease;
+
+    margin-left: -15px;  /* 👈 move button slightly left */
+}
+
+
+.footer-logo .download-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    color: #fff;
+    border-color: #0056b3;
 }
 
 .footer-sections {
@@ -1714,7 +1789,7 @@
     color: #fff;
     position: relative;
     padding-bottom: 4px;
-    display: inline-block; /* shrink underline to text length */
+    display: inline-block;
 }
 
 .footer-section h3::after {
@@ -1722,16 +1797,13 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    width:60%;            /* now matches only the text length */
     height: 2px;
     background-color: #fff;
 }
 
-
 .footer-section:nth-child(3) {
-    flex: 2; /* double width compared to others */
+    flex: 2;
 }
-
 
 .footer-section ul {
     list-style: none;
@@ -1797,22 +1869,6 @@
     text-decoration: none;
 }
 
-.download-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: transparent;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 14px;
-    border: 1px solid #fff;
-    transition: all 0.3s ease;
-}
-
-.download-btn:hover {
-    background-color: #fff;
-    color: #000;
-}
 
 /* Carousel Section */
 .carousel-section {
@@ -3002,22 +3058,26 @@
   </div>
 </section>
 
-     <footer class="footer">
+     <footer class="footer" id="contact">
     <div class="footer-container">
       <div class="footer-logo">
         <img src="public/images/logo1.png" alt="Logo">
+   <a href="public/images/brochure.pdf" download="Advisewise-Brochure.pdf" class="download-btn">
+  Download Our Brochure
+</a>
+
       </div>
       <div class="footer-sections">
         <div class="footer-section">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Why Study Abroad?</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Contact us</a></li>
-          </ul>
-        </div>
+  <h3>Quick Links</h3>
+  <ul>
+    <li><a href="#hero-top">Home</a></li>
+    <li><a href="#about">About us</a></li>
+    <li><a href="#why">Why Study Abroad?</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact us</a></li>
+  </ul>
+</div>
         <div class="footer-section">
           <h3>Explore</h3>
           <ul>
@@ -3026,6 +3086,7 @@
             <li><a href="#">Contact Us</a></li>
             <li><a href="#">MBBS</a></li>
             <li><a href="#">Student Login</a></li>
+            
           </ul>
         </div>
         <div class="footer-section">
@@ -3049,8 +3110,6 @@
     </div>
     <div class="footer-bottom">
       <p>© 2025 | Advisewise Group of Companies. All Rights Reserved. | <a href="#">Discover your vocation with Advisewise.</a></p>
-      <!-- Change href to your actual brochure file -->
-      <a href="public/brochure.pdf" class="download-btn" download>Download Our Brochure</a>
     </div>
   </footer>
     

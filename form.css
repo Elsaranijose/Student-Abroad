@@ -65,7 +65,7 @@ body {
   line-height: clamp(20px, 2.5vw, 25px);
   border-radius: 50%;
   background: #fff;
-  color: #504e4e9c;
+  color: #0000009c;
   text-align: center;
   font-weight: bold;
 }
@@ -95,7 +95,7 @@ body {
 .form-right {
   width: 65%;
   padding: clamp(20px, 3vw, 40px);
-  color: #5e5c5cdf;
+  color: #060606a8;
   overflow-y: auto;
   height: 100%;
 }
