@@ -1304,6 +1304,7 @@
 }
 
 /* Contact Section */
+/* Contact Section */
 .contact-section {
     padding: clamp(3rem, 8vw, 6rem) 0;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), var(--bg);
@@ -1325,22 +1326,44 @@
     border-radius: 1rem;
     overflow: hidden;
     min-height: clamp(20rem, 40vw, 35rem);
-    flex: 0 0 40%;
+    flex: 1; /* Make it flexible */
     position: relative;
 }
 
 .contact-image1 img {
+    /* ... (rest of the img styles) */
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 1rem;
-    transition: opacity 1s ease-in-out;
-    opacity: 0;
 }
 
+.contact-form {
+    /* ... (rest of the form styles) */
+    flex: 1; /* Make it flexible */
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column; /* Stacks image and form on mobile */
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .contact-image1 {
+        flex: 1 1 auto; /* Allows it to shrink and grow as needed */
+        min-height: clamp(15rem, 40vw, 25rem);
+        width: 100%; /* Ensures it takes full width */
+    }
+
+    .contact-form {
+        flex: 1 1 auto;
+        width: 100%; /* Ensures it takes full width */
+    }
+}
 .contact-image1 img.active {
     opacity: 1;
     z-index: 1;
@@ -1766,17 +1789,65 @@
     flex: 1;
     justify-content: space-between;
     align-items: stretch;
-    flex-wrap: nowrap;
-    gap: 40px;
+    flex-wrap: wrap; /* Allows sections to wrap to a new line */
+    gap: 20px; /* Increased gap for better spacing on mobile */
 }
 
 .footer-section {
-    flex: 1;
-    min-width: 0;
-    padding: 0 20px;
-    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    flex: 1 1 200px; /* Allows each section to grow and shrink, but keeps a minimum width */
+    min-width: 200px; /* Optional, but helps maintain minimum size */
+    padding: 0 10px;
+    border-right: none; /* Removed the border from the base style */
     display: flex;
     flex-direction: column;
+}
+
+@media (min-width: 769px) {
+    .footer-section {
+        border-right: 1px solid rgba(255, 255, 255, 0.3); /* Add border back for desktop */
+    }
+
+    .footer-section:last-child {
+        border-right: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-logo {
+        margin-right: 0;
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .footer-logo .download-btn {
+        margin-left: 0; /* Center the button */
+    }
+
+    .footer-sections {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-section {
+        padding: 0;
+        margin-bottom: 25px;
+    }
+
+    .footer-section h3 {
+        text-align: center;
+    }
+    
+    .footer-section h3::after {
+        margin: 0 auto;
+    }
 }
 
 .footer-section:last-child {
@@ -1870,12 +1941,12 @@
 }
 
 
+
 /* Carousel Section */
 .carousel-section {
     position: relative;
     width: 100%;
     overflow: hidden;
-    margin: 0;
     background: #1a1a1a;
     z-index: 0;
 }
@@ -1883,24 +1954,23 @@
 .carousel-container {
     position: relative;
     width: 100%;
-    height: 560px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding-top: 56.25%; /* 16:9 aspect ratio (9/16 * 100) */
     background: #1a1a1a;
 }
 
 .carousel-slide {
     display: none;
-    position: absolute;
+    position: absolute; /* Allows slides to overlap */
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 1200px;
     height: 100%;
     transition: transform 0.5s ease, opacity 0.5s ease;
     opacity: 0;
 }
 
 .carousel-slide video {
+    position: absolute; /* Crucial for videos to fill the parent slide */
     width: 100%;
     height: 100%;
     border-radius: 10px;
@@ -1908,32 +1978,74 @@
     background: #000;
 }
 
-/* Size adjustments for queue effect */
-.carousel-slide:nth-child(1) video {
-    width: 70%; /* Smallest rectangle */
-    height: 70%;
-    position: absolute;
-    left: 10%;
-    top: 20%;
-    z-index: 1;
-}
-
-.carousel-slide:nth-child(2) video {
-    width: 80%; /* Slightly larger than first */
-    height: 80%;
-    position: absolute;
-    left: 15%;
-    top: 15%;
-    z-index: 2;
-}
-
-.carousel-slide:nth-child(3) video {
-    width: 90%; /* Largest rectangle */
-    height: 90%;
-    position: absolute;
-    left: 5%;
-    top: 5%;
+/* The queue effect needs to be rethought for small screens */
+/* On mobile, stack them on top of each other and use a simpler animation */
+.carousel-slide.active {
+    display: block;
+    opacity: 1;
     z-index: 3;
+    transform: none; /* No scaling or shifting on mobile */
+}
+
+/* Hide previous and next on mobile for a cleaner look */
+.carousel-slide.previous, .carousel-slide.next {
+    display: none;
+}
+
+.carousel-prev, .carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #000000;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    z-index: 10;
+}
+
+/* Responsive adjustments for desktop */
+@media (min-width: 769px) {
+    .carousel-container {
+        height: 560px; /* Revert to fixed height on larger screens */
+        padding-top: 0;
+    }
+
+    .carousel-slide:nth-child(1) video {
+        width: 70%;
+        height: 70%;
+        position: absolute;
+        left: 10%;
+        top: 20%;
+    }
+
+    .carousel-slide:nth-child(2) video {
+        width: 70%;
+        height: 70%;
+        position: absolute;
+        left: 15%;
+        top: 15%;
+    }
+
+    .carousel-slide:nth-child(3) video {
+        width: 70%;
+        height: 70%;
+        position: absolute;
+        left: 5%;
+        top: 5%;
+    }
+
+    .carousel-slide.previous {
+        display: block;
+        opacity: 0.5;
+        transform: translateX(-20%) scale(0.9);
+    }
+    .carousel-slide.next {
+        display: block;
+        opacity: 0.3;
+        transform: translateX(20%) scale(0.9);
+    }
 }
 
 .carousel-slide.active {
